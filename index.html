@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Via | Product Designer</title>
+  <style>
+    /* ── Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FAFAFA;
+      --ink: #2E2E2E;
+      --ink-dark: #111111;
+      --muted: #888888;
+      --border: rgba(0,0,0,0.08);
+      --nav-bg: rgba(244, 244, 244, 0.50);
+      --nav-border: rgba(255, 255, 255, 0.70);
+      --nav-shadow: 0 6px 36px rgba(0,0,0,0.16);
+      --pill-bg: #ffffff;
+      --pill-shadow: 0 4px 32px rgba(0,0,0,0.15);
+      --link: #111111;
+      --link-dec: #2E2E2E;
+      --nav-link: #434343;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #171717;
+        --ink: #DFDFDF;
+        --ink-dark: #FFFFFF;
+        --muted: #A1A1A1;
+        --border: rgba(255,255,255,0.08);
+        --nav-bg: rgba(28, 28, 28, 0.85);
+        --nav-border: rgba(180, 180, 180, 0.10);
+        --nav-shadow: 0 8px 36px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.30);
+        --pill-bg: rgba(255,255,255,0.10);
+        --pill-shadow: 0 4px 24px rgba(0,0,0,0.30);
+        --link: #DFDFDF;
+        --link-dec: #444444;
+        --nav-link: rgba(255,255,255,0.85);
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 24px;
+      line-height: 38px;
+      font-weight: 400;
+      margin: 0 auto;
+      padding-bottom: 120px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 3px;
+      text-decoration-color: var(--link-dec);
+    }
+
+    /* ── Layout ── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    main {
+      max-width: 680px;
+      margin: 100px auto;
+      padding: 0 24px 80px;
+    }
+
+    section {
+      margin-bottom: 56px;
+    }
+
+    h1, h2 {
+      font-size: 36px;
+      line-height: 44px;
+      font-weight: 400;
+      color: var(--ink-dark);
+      margin-bottom: 28px;
+    }
+
+    h3 {
+      font-size: 19px;
+      line-height: 32px;
+      font-weight: 600;
+      color: var(--ink-dark);
+      margin-bottom: 4px;
+    }
+
+    h4 {
+      font-size: 16px;
+      line-height: 28px;
+      font-weight: 600;
+      color: var(--ink-dark);
+      margin-bottom: 2px;
+    }
+
+    p {
+      margin-bottom: 28px;
+      color: var(--muted);
+    }
+    p:last-child { margin-bottom: 0; }
+
+    p a, .body-link {
+      color: var(--ink-dark);
+      font-weight: 400;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 56px 0;
+    }
+
+    ul { list-style: none; padding: 0; }
+
+    /* ── Home: intro layout ── */
+    .home-intro {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 56px;
+    }
+
+    .home-photo {
+      flex-shrink: 0;
+      width: 200px;
+    }
+
+    .home-photo img {
+      width: 100%;
+      border-radius: 20px;
+      display: block;
+    }
+
+    .home-photo-placeholder {
+      width: 200px;
+      aspect-ratio: 1;
+      border-radius: 20px;
+      background: rgba(0,0,0,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .home-photo-placeholder { background: rgba(255,255,255,0.06); }
+    }
+
+    .home-text { flex: 1; }
+
+    .home-name {
+      font-size: 36px;
+      line-height: 44px;
+      font-weight: 400;
+      color: var(--ink-dark);
+      margin-bottom: 24px;
+    }
+
+    .home-links {
+      margin-top: 24px;
+      display: flex;
+      gap: 24px;
+    }
+
+    .home-links a {
+      font-size: 19px;
+      color: var(--muted);
+    }
+    .home-links a:hover { color: var(--ink-dark); }
+
+    /* ── List items ── */
+    .list-item {
+      padding: 12px 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .list-item:last-child { border-bottom: 1px solid var(--border); }
+
+    .list-item-main { flex: 1; }
+
+    .list-item-title {
+      font-size: 19px;
+      line-height: 32px;
+      font-weight: 600;
+      color: var(--ink-dark);
+      cursor: pointer;
+    }
+
+    .list-item-title:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 3px;
+      text-decoration-color: var(--link-dec);
+    }
+
+    .list-item-sub {
+      font-size: 16px;
+      line-height: 28px;
+      color: var(--muted);
+    }
+
+    .list-item-meta {
+      font-size: 16px;
+      line-height: 32px;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── Work card: image float ── */
+    .work-item {
+      margin-bottom: 16px;
+      overflow: hidden;
+      min-height: 96px;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+    .work-item:last-child { border-bottom: 1px solid var(--border); }
+
+    .work-img {
+      width: 156px;
+      aspect-ratio: 16/9;
+      border-radius: 8px;
+      float: right;
+      margin: 0 0 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      flex-shrink: 0;
+    }
+
+    .work-year {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 28px;
+      margin-bottom: 2px;
+      display: block;
+    }
+
+    .work-title {
+      font-size: 19px;
+      line-height: 32px;
+      font-weight: 600;
+      color: var(--ink-dark);
+      margin-bottom: 4px;
+      cursor: pointer;
+    }
+
+    .work-title:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 3px;
+      text-decoration-color: var(--link-dec);
+    }
+
+    .work-desc {
+      font-size: 19px;
+      line-height: 32px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .work-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .work-tag {
+      font-size: 14px;
+      line-height: 24px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0 10px;
+    }
+
+    .work-metrics {
+      display: flex;
+      gap: 24px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .work-metric-val { font-size: 19px; font-weight: 600; color: var(--ink-dark); line-height: 28px; }
+    .work-metric-label { font-size: 14px; color: var(--muted); line-height: 22px; }
+
+    /* ── Timeline ── */
+    .tl-year-heading {
+      font-size: 36px;
+      line-height: 44px;
+      font-weight: 400;
+      color: var(--ink-dark);
+      margin-bottom: 0;
+      margin-top: 56px;
+    }
+
+    .tl-year-heading:first-child { margin-top: 0; }
+
+    .tl-item {
+      border-top: 1px solid var(--border);
+      padding: 14px 0;
+      overflow: hidden;
+      min-height: 80px;
+    }
+    .tl-item:last-child { border-bottom: 1px solid var(--border); }
+
+    .tl-img {
+      width: 120px;
+      aspect-ratio: 16/9;
+      border-radius: 6px;
+      float: right;
+      margin: 0 0 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .tl-cat {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 24px;
+      margin-bottom: 2px;
+      display: block;
+    }
+
+    .tl-title {
+      font-size: 19px;
+      line-height: 30px;
+      font-weight: 600;
+      color: var(--ink-dark);
+      margin-bottom: 4px;
+    }
+
+    .tl-desc {
+      font-size: 16px;
+      line-height: 26px;
+      color: var(--muted);
+    }
+
+    /* ── Resources ── */
+    .res-item {
+      border-top: 1px solid var(--border);
+      padding: 14px 0;
+      overflow: hidden;
+      min-height: 80px;
+    }
+    .res-item:last-child { border-bottom: 1px solid var(--border); }
+
+    .res-img {
+      width: 120px;
+      aspect-ratio: 16/9;
+      border-radius: 8px;
+      float: right;
+      margin: 0 0 8px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .res-cat {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 24px;
+      margin-bottom: 2px;
+      display: block;
+    }
+
+    .res-title {
+      font-size: 19px;
+      line-height: 30px;
+      font-weight: 600;
+      color: var(--ink-dark);
+      margin-bottom: 4px;
+      cursor: pointer;
+    }
+
+    .res-title:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 3px;
+      text-decoration-color: var(--link-dec);
+    }
+
+    .res-desc {
+      font-size: 16px;
+      line-height: 26px;
+      color: var(--muted);
+    }
+
+    .res-foot {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .res-price {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink-dark);
+    }
+
+    .res-dl {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      font-size: 16px;
+      line-height: 28px;
+      color: var(--muted);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    /* ── Filter tabs ── */
+    .filters {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .filter-btn {
+      font-family: inherit;
+      font-size: 16px;
+      line-height: 28px;
+      color: var(--muted);
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 2px 14px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    .filter-btn:hover { color: var(--ink-dark); border-color: var(--ink); }
+    .filter-btn.active {
+      color: var(--bg);
+      background: var(--ink-dark);
+      border-color: var(--ink-dark);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .filter-btn.active { color: var(--bg); background: var(--ink-dark); border-color: var(--ink-dark); }
+    }
+
+    /* ── Overlay ── */
+    .overlay {
+      display: none;
+      position: fixed; inset: 0;
+      z-index: 400;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      overflow-y: auto;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .overlay { background: rgba(23,23,23,0.95); }
+    }
+
+    .overlay.open { display: block; }
+
+    .overlay-inner {
+      max-width: 680px;
+      margin: 80px auto 120px;
+      padding: 0 24px;
+    }
+
+    .overlay-close {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 16px;
+      color: var(--muted);
+      cursor: pointer;
+      margin-bottom: 48px;
+      background: none;
+      border: none;
+      font-family: inherit;
+      padding: 0;
+    }
+
+    .overlay-close:hover { color: var(--ink-dark); }
+
+    .overlay-emoji {
+      font-size: 56px;
+      margin-bottom: 28px;
+      display: block;
+    }
+
+    .overlay-eyebrow {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .overlay-title {
+      font-size: 36px;
+      line-height: 44px;
+      font-weight: 400;
+      color: var(--ink-dark);
+      margin-bottom: 28px;
+    }
+
+    .overlay-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+    .overlay-tag {
+      font-size: 14px;
+      line-height: 26px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0 12px;
+    }
+
+    .overlay-body {
+      font-size: 21px;
+      line-height: 34px;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+    .overlay-body p { color: var(--muted); }
+
+    .overlay-metrics {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ov-metric-val { font-size: 28px; line-height: 36px; font-weight: 400; color: var(--ink-dark); }
+    .ov-metric-label { font-size: 16px; color: var(--muted); line-height: 26px; margin-top: 2px; }
+
+    .overlay-section-h {
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--ink-dark);
+      margin-bottom: 16px;
+    }
+
+    .overlay-steps { list-style: none; padding: 0; }
+    .overlay-steps li {
+      font-size: 19px;
+      line-height: 32px;
+      color: var(--muted);
+      padding: 12px 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 16px;
+    }
+    .overlay-steps li:last-child { border-bottom: 1px solid var(--border); }
+    .overlay-step-n { color: var(--ink-dark); font-weight: 600; flex-shrink: 0; }
+
+    /* ── Bottom Nav (Charlie Deets style floating pill) ── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 300;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 46px;
+      box-shadow: var(--nav-shadow);
+      border: 1px solid var(--nav-border);
+      display: inline-flex;
+      white-space: nowrap;
+      padding: 0;
+    }
+
+    .nav-indicator {
+      position: absolute;
+      top: -1px;
+      height: 46px;
+      background: var(--pill-bg);
+      border-radius: 46px;
+      box-shadow: var(--pill-shadow);
+      transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .nav-link {
+      font-family: inherit;
+      font-size: 15px;
+      line-height: 44px;
+      font-weight: 400;
+      color: var(--nav-link);
+      padding: 0 22px;
+      height: 44px;
+      border-radius: 46px;
+      position: relative;
+      z-index: 1;
+      cursor: pointer;
+      transition: color 0.15s;
+      background: none;
+      border: none;
+      text-decoration: none;
+      display: block;
+    }
+
+    .nav-link:first-child { padding-left: 20px; }
+    .nav-link:hover { color: var(--ink-dark); text-decoration: none; }
+    .nav-link.active { color: var(--ink-dark); }
+
+    @media (prefers-color-scheme: dark) {
+      .nav-link.active { color: #ffffff; }
+      .nav-link:hover { color: rgba(255,255,255,0.92); }
+    }
+
+    /* ── Responsive ── */
+    @media screen and (max-width: 640px) {
+      body { font-size: 21px; line-height: 34px; }
+      main { margin: 64px auto; }
+      h1, h2 { font-size: 28px; line-height: 36px; }
+      .home-intro { flex-direction: column; gap: 28px; }
+      .home-photo { width: 120px; }
+      .home-photo-placeholder { width: 120px; height: 120px; font-size: 48px; }
+      .work-img, .tl-img, .res-img { width: 88px; }
+      .overlay-metrics { gap: 24px; flex-wrap: wrap; }
+      .nav-link { padding: 0 14px; font-size: 14px; }
+      .bottom-nav { bottom: 20px; }
+    }
+
+    /* ── Fade in ── */
+    #fadein {
+      position: fixed; inset: 0; z-index: 1000;
+      background: var(--bg);
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    #fadein.gone { opacity: 0; }
+  </style>
+</head>
+<body>
+
+<div id="fadein"></div>
+
+<!-- ══ HOME ══ -->
+<div id="page-home" class="page active">
+  <main>
+    <div class="home-intro">
+      <div class="home-photo">
+        <div class="home-photo-placeholder">🧑‍💻</div>
+      </div>
+      <div class="home-text">
+        <h2 class="home-name">Via</h2>
+        <p>
+          I design products with a focus on <a href="#" onclick="navigate('work');return false;">simplicity</a>,
+          <a href="#" onclick="navigate('timeline');return false;">craft</a>, and
+          <a href="#" onclick="navigate('resources');return false;">accessibility</a>.
+        </p>
+        <p>
+          I work as a product designer and solopreneur based in Jakarta, Indonesia 🇮🇩.
+        </p>
+        <p>
+          Previously, I've led design for civic tech platforms, travel campaigns, and AI research. I care deeply about design that serves people — not just delights them.
+        </p>
+        <div class="home-links">
+          <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+          <a href="https://x.com" target="_blank">Twitter</a>
+          <a href="mailto:via@example.com">Email</a>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <section>
+      <span class="section-label">Selected work</span>
+      <ul>
+        <li class="list-item">
+          <div class="list-item-main">
+            <div class="list-item-title" onclick="openWork('bijak')">Bijak Memilih — Civic Design Platform</div>
+            <div class="list-item-sub">Political literacy platform for Indonesian voters</div>
+          </div>
+          <div class="list-item-meta">2023</div>
+        </li>
+        <li class="list-item">
+          <div class="list-item-main">
+            <div class="list-item-title" onclick="openWork('lima')">Project Lima — AI & Design Research</div>
+            <div class="list-item-sub">How AI reshapes the role of designers</div>
+          </div>
+          <div class="list-item-meta">2023</div>
+        </li>
+        <li class="list-item">
+          <div class="list-item-main">
+            <div class="list-item-title" onclick="openWork('liburan')">Semua Bisa Liburan — AR Travel Campaign</div>
+            <div class="list-item-sub">Inclusive tourism through augmented reality</div>
+          </div>
+          <div class="list-item-meta">2021</div>
+        </li>
+        <li class="list-item">
+          <div class="list-item-main">
+            <div class="list-item-title" onclick="openWork('tiket')">Tiket.com — Hotel Comparison Redesign</div>
+            <div class="list-item-sub">Reducing decision fatigue on mobile booking</div>
+          </div>
+          <div class="list-item-meta">2022</div>
+        </li>
+      </ul>
+    </section>
+
+    <hr />
+
+    <section>
+      <span class="section-label">What I do</span>
+      <p>
+        <span style="color:var(--ink-dark);font-weight:400;">Product & interface design</span> — from user research and wireframes to high-fidelity prototypes. I build things that feel intuitive and look considered.
+      </p>
+      <p>
+        <span style="color:var(--ink-dark);font-weight:400;">No-code development</span> — production-ready websites in Webflow and Framer. Designer quality without engineering overhead.
+      </p>
+      <p>
+        <span style="color:var(--ink-dark);font-weight:400;">Design resources</span> — templates, kits, and tools for designers and solopreneurs. Over 7,000 people use something I made.
+      </p>
+    </section>
+  </main>
+</div>
+
+<!-- ══ WORK ══ -->
+<div id="page-work" class="page">
+  <main>
+    <h1>Work</h1>
+
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterWork('all',this)">All</button>
+      <button class="filter-btn" onclick="filterWork('ux',this)">UX / UI</button>
+      <button class="filter-btn" onclick="filterWork('social',this)">Social Impact</button>
+      <button class="filter-btn" onclick="filterWork('research',this)">Research</button>
+      <button class="filter-btn" onclick="filterWork('campaign',this)">Campaigns</button>
+    </div>
+
+    <div id="work-list">
+
+      <div class="work-item" data-cat="social ux">
+        <div class="work-img" style="background:rgba(59,130,246,0.07);">🗳️</div>
+        <span class="work-year">2023</span>
+        <div class="work-title" onclick="openWork('bijak')">Bijak Memilih — Civic Design Platform</div>
+        <div class="work-desc">Political literacy platform for Indonesian voters. Human-centred design meets social responsibility.</div>
+        <div class="work-tags">
+          <span class="work-tag">Civic Tech</span>
+          <span class="work-tag">Social Impact</span>
+          <span class="work-tag">Web Platform</span>
+        </div>
+        <div class="work-metrics">
+          <div><div class="work-metric-val">45K+</div><div class="work-metric-label">Users reached</div></div>
+          <div><div class="work-metric-val">92%</div><div class="work-metric-label">Task success</div></div>
+          <div><div class="work-metric-val">4.7★</div><div class="work-metric-label">User rating</div></div>
+        </div>
+      </div>
+
+      <div class="work-item" data-cat="research ux">
+        <div class="work-img" style="background:rgba(124,92,252,0.07);">🤖</div>
+        <span class="work-year">2023</span>
+        <div class="work-title" onclick="openWork('lima')">Project Lima — AI & Design Research</div>
+        <div class="work-desc">Exploring how artificial intelligence reshapes the role of designers and the future of creative work.</div>
+        <div class="work-tags">
+          <span class="work-tag">AI Research</span>
+          <span class="work-tag">Speculative Design</span>
+        </div>
+        <div class="work-metrics">
+          <div><div class="work-metric-val">3K+</div><div class="work-metric-label">Report reads</div></div>
+          <div><div class="work-metric-val">12</div><div class="work-metric-label">Expert interviews</div></div>
+          <div><div class="work-metric-val">6 mo</div><div class="work-metric-label">Research</div></div>
+        </div>
+      </div>
+
+      <div class="work-item" data-cat="campaign ux">
+        <div class="work-img" style="background:rgba(34,197,94,0.07);">🌴</div>
+        <span class="work-year">2021</span>
+        <div class="work-title" onclick="openWork('liburan')">Semua Bisa Liburan — AR Travel Campaign</div>
+        <div class="work-desc">Augmented reality campaign making travel dreams accessible for all Indonesians — Cannes Lions shortlisted.</div>
+        <div class="work-tags">
+          <span class="work-tag">AR Campaign</span>
+          <span class="work-tag">Travel</span>
+          <span class="work-tag">Inclusive</span>
+        </div>
+        <div class="work-metrics">
+          <div><div class="work-metric-val">1.2M</div><div class="work-metric-label">AR interactions</div></div>
+          <div><div class="work-metric-val">82K</div><div class="work-metric-label">Social shares</div></div>
+          <div><div class="work-metric-val">+34%</div><div class="work-metric-label">Bookings</div></div>
+        </div>
+      </div>
+
+      <div class="work-item" data-cat="ux">
+        <div class="work-img" style="background:rgba(251,191,36,0.07);">🎫</div>
+        <span class="work-year">2022</span>
+        <div class="work-title" onclick="openWork('tiket')">Tiket.com — Hotel Comparison Redesign</div>
+        <div class="work-desc">Redesigning hotel search for Indonesia's leading travel platform — reducing decision fatigue on mobile.</div>
+        <div class="work-tags">
+          <span class="work-tag">UX / UI</span>
+          <span class="work-tag">Mobile</span>
+          <span class="work-tag">Product Design</span>
+        </div>
+        <div class="work-metrics">
+          <div><div class="work-metric-val">↓31%</div><div class="work-metric-label">Drop-off</div></div>
+          <div><div class="work-metric-val">+18%</div><div class="work-metric-label">Conversions</div></div>
+          <div><div class="work-metric-val">4.9★</div><div class="work-metric-label">App rating</div></div>
+        </div>
+      </div>
+
+      <div class="work-item" data-cat="ux social">
+        <div class="work-img" style="background:rgba(236,72,153,0.07);">♿</div>
+        <span class="work-year">2024</span>
+        <div class="work-title" onclick="openWork('inklusif')">Inklusif — Accessibility Design System</div>
+        <div class="work-desc">Indonesia's first open-source accessibility design system. 240+ WCAG 2.1 AA components for local product teams.</div>
+        <div class="work-tags">
+          <span class="work-tag">Accessibility</span>
+          <span class="work-tag">Design System</span>
+          <span class="work-tag">Open Source</span>
+        </div>
+        <div class="work-metrics">
+          <div><div class="work-metric-val">240+</div><div class="work-metric-label">Components</div></div>
+          <div><div class="work-metric-val">18</div><div class="work-metric-label">Teams adopted</div></div>
+          <div><div class="work-metric-val">Open</div><div class="work-metric-label">Source</div></div>
+        </div>
+      </div>
+
+      <div class="work-item" data-cat="research campaign">
+        <div class="work-img" style="background:rgba(59,130,246,0.07);">📚</div>
+        <span class="work-year">2022</span>
+        <div class="work-title" onclick="openWork('ruang')">Ruang Kreasi — Learning Platform</div>
+        <div class="work-desc">Creative learning platform for young Indonesian designers — end-to-end design with a 94% completion rate.</div>
+        <div class="work-tags">
+          <span class="work-tag">EdTech</span>
+          <span class="work-tag">Research</span>
+          <span class="work-tag">Web App</span>
+        </div>
+        <div class="work-metrics">
+          <div><div class="work-metric-val">8K+</div><div class="work-metric-label">Enrolled</div></div>
+          <div><div class="work-metric-val">94%</div><div class="work-metric-label">Completion</div></div>
+          <div><div class="work-metric-val">4.8★</div><div class="work-metric-label">CSAT</div></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- ══ TIMELINE ══ -->
+<div id="page-timeline" class="page">
+  <main>
+    <h1>Timeline</h1>
+    <p style="margin-bottom:40px;">Achievements, creations, growth, writings, and new adventures — in roughly reverse order.</p>
+
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterTl('all',this)">All</button>
+      <button class="filter-btn" onclick="filterTl('achievement',this)">Achievements</button>
+      <button class="filter-btn" onclick="filterTl('creation',this)">Creations</button>
+      <button class="filter-btn" onclick="filterTl('growth',this)">Growth</button>
+      <button class="filter-btn" onclick="filterTl('writing',this)">Writings</button>
+      <button class="filter-btn" onclick="filterTl('adventure',this)">Adventures</button>
+    </div>
+
+    <h2 class="tl-year-heading">2024</h2>
+
+    <div class="tl-item" data-cat="achievement">
+      <div class="tl-img" style="background:rgba(251,191,36,0.08);">🏆</div>
+      <span class="tl-cat">Achievement · May 2024</span>
+      <div class="tl-title">Launched Inklusif — Indonesia's First Accessibility Design System</div>
+      <div class="tl-desc">240+ WCAG 2.1 AA components, adopted by 18 product teams in the first three months after launch.</div>
+    </div>
+
+    <div class="tl-item" data-cat="adventure">
+      <div class="tl-img" style="background:rgba(236,72,153,0.08);">🚀</div>
+      <span class="tl-cat">Adventure · Mar 2024</span>
+      <div class="tl-title">Went Full Solopreneur — Left Studio Life</div>
+      <div class="tl-desc">Took the leap from studio employment to an independent design practice. Now working with clients across Southeast Asia.</div>
+    </div>
+
+    <div class="tl-item" data-cat="growth">
+      <div class="tl-img" style="background:rgba(34,197,94,0.08);">📈</div>
+      <span class="tl-cat">Growth · Jan 2024</span>
+      <div class="tl-title">Hit 7,000 Resource Downloads</div>
+      <div class="tl-desc">7,000 designers around the world using something I made. The Freelancer Kit alone crossed 500 downloads.</div>
+    </div>
+
+    <h2 class="tl-year-heading">2023</h2>
+
+    <div class="tl-item" data-cat="creation">
+      <div class="tl-img" style="background:rgba(124,92,252,0.08);">🤖</div>
+      <span class="tl-cat">Creation · Nov 2023</span>
+      <div class="tl-title">Completed Project Lima — AI & Design Research</div>
+      <div class="tl-desc">Six months of interviews and speculative frameworks exploring how AI reshapes creative roles. Read by 3,000+ designers.</div>
+    </div>
+
+    <div class="tl-item" data-cat="writing">
+      <div class="tl-img" style="background:rgba(59,130,246,0.08);">✍️</div>
+      <span class="tl-cat">Writing · Nov 2023</span>
+      <div class="tl-title">"AI Won't Replace Designers. Here's What Might."</div>
+      <div class="tl-desc">My most-read piece. A reflection on creativity, automation, and the specific human things that still matter in design.</div>
+    </div>
+
+    <div class="tl-item" data-cat="creation">
+      <div class="tl-img" style="background:rgba(59,130,246,0.08);">🗳️</div>
+      <span class="tl-cat">Creation · Aug 2023</span>
+      <div class="tl-title">Launched Bijak Memilih — Civic Design Platform</div>
+      <div class="tl-desc">Reached 45,000+ users ahead of Indonesia's 2024 election cycle. Task success rate: 92%.</div>
+    </div>
+
+    <div class="tl-item" data-cat="adventure">
+      <div class="tl-img" style="background:rgba(251,191,36,0.08);">🎤</div>
+      <span class="tl-cat">Adventure · Apr 2023</span>
+      <div class="tl-title">Spoke at DesignConf Jakarta 2023</div>
+      <div class="tl-desc">"Designing for Democracy" — on the responsibility designers carry when building civic-facing products.</div>
+    </div>
+
+    <div class="tl-item" data-cat="writing">
+      <div class="tl-img" style="background:rgba(59,130,246,0.08);">📝</div>
+      <span class="tl-cat">Writing · Jul 2023</span>
+      <div class="tl-title">"Designing Inclusively for Indonesian Users"</div>
+      <div class="tl-desc">Field research in Jakarta revealed assumptions I didn't know I was making. A piece about being wrong first.</div>
+    </div>
+
+    <div class="tl-item" data-cat="writing">
+      <div class="tl-img" style="background:rgba(59,130,246,0.08);">💰</div>
+      <span class="tl-cat">Writing · Feb 2023</span>
+      <div class="tl-title">"The Freelance Pricing Guide for Designers"</div>
+      <div class="tl-desc">The piece I wish existed when I started. How I figured out what to charge — and the mindset shift that made it possible.</div>
+    </div>
+
+    <h2 class="tl-year-heading">2022</h2>
+
+    <div class="tl-item" data-cat="creation">
+      <div class="tl-img" style="background:rgba(251,191,36,0.08);">🎫</div>
+      <span class="tl-cat">Creation · Dec 2022</span>
+      <div class="tl-title">Shipped Tiket.com Hotel Comparison Redesign</div>
+      <div class="tl-desc">Drop-off rate down 31%. Conversions up 18%. App store rating hit 4.9.</div>
+    </div>
+
+    <div class="tl-item" data-cat="creation">
+      <div class="tl-img" style="background:rgba(59,130,246,0.08);">📚</div>
+      <span class="tl-cat">Creation · Sep 2022</span>
+      <div class="tl-title">Launched Ruang Kreasi — Learning Platform</div>
+      <div class="tl-desc">8,000 students enrolled. 94% course completion — 3× higher than industry average for online design courses.</div>
+    </div>
+
+    <div class="tl-item" data-cat="growth">
+      <div class="tl-img" style="background:rgba(34,197,94,0.08);">🏢</div>
+      <span class="tl-cat">Growth · Mar 2022</span>
+      <div class="tl-title">Joined a Startup Studio as Senior Product Designer</div>
+      <div class="tl-desc">First senior role. Leading design for three concurrent products. A shift from designing screens to designing systems.</div>
+    </div>
+
+    <div class="tl-item" data-cat="writing">
+      <div class="tl-img" style="background:rgba(59,130,246,0.08);">🐦</div>
+      <span class="tl-cat">Writing · Aug 2022</span>
+      <div class="tl-title">"How Not to Design Modern UI" — Went Viral</div>
+      <div class="tl-desc">A Twitter thread that became an article. 12K+ shares. Honest critique of the most common portfolio mistakes I see.</div>
+    </div>
+
+    <h2 class="tl-year-heading">2021</h2>
+
+    <div class="tl-item" data-cat="achievement">
+      <div class="tl-img" style="background:rgba(251,191,36,0.08);">🏅</div>
+      <span class="tl-cat">Achievement · Nov 2021</span>
+      <div class="tl-title">Semua Bisa Liburan Shortlisted at Cannes Lions</div>
+      <div class="tl-desc">1.2M AR interactions. 82K social shares. Shortlisted in the Design category. The most joy I've ever put into work.</div>
+    </div>
+
+    <div class="tl-item" data-cat="adventure">
+      <div class="tl-img" style="background:rgba(236,72,153,0.08);">👩‍🏫</div>
+      <span class="tl-cat">Adventure · Jun 2021</span>
+      <div class="tl-title">Started Teaching Design Online</div>
+      <div class="tl-desc">A WhatsApp critique group became a community of 400+ Indonesian designers. Still one of the best decisions I've made.</div>
+    </div>
+
+    <div class="tl-item" data-cat="growth">
+      <div class="tl-img" style="background:rgba(34,197,94,0.08);">🌐</div>
+      <span class="tl-cat">Growth · Feb 2021</span>
+      <div class="tl-title">First International Client — Singapore Fintech</div>
+      <div class="tl-desc">First time designing for a multi-country, multi-language user base. Changed how I think about context in design.</div>
+    </div>
+
+    <h2 class="tl-year-heading">2020</h2>
+
+    <div class="tl-item" data-cat="growth">
+      <div class="tl-img" style="background:rgba(34,197,94,0.08);">🎓</div>
+      <span class="tl-cat">Growth · Dec 2020</span>
+      <div class="tl-title">Graduated — Visual Communication Design, UI</div>
+      <div class="tl-desc">Graduated with distinction during a pandemic year. Thesis: inclusive design for rural Indonesian users.</div>
+    </div>
+
+    <div class="tl-item" data-cat="creation">
+      <div class="tl-img" style="background:rgba(124,92,252,0.08);">🎁</div>
+      <span class="tl-cat">Creation · Jul 2020</span>
+      <div class="tl-title">Launched "Desainer Starter Pack" — First Digital Product</div>
+      <div class="tl-desc">Free Figma resource kit for design students. 800 downloads in week one. I've never been the same since.</div>
+    </div>
+
+    <h2 class="tl-year-heading">2019</h2>
+
+    <div class="tl-item" data-cat="achievement">
+      <div class="tl-img" style="background:rgba(251,191,36,0.08);">🥇</div>
+      <span class="tl-cat">Achievement · Oct 2019</span>
+      <div class="tl-title">Won BEKRAF Design Challenge — UI/UX Category</div>
+      <div class="tl-desc">National design competition. Entry: a civic voting app for first-time voters. First real recognition that this path was right.</div>
+    </div>
+
+    <div class="tl-item" data-cat="growth">
+      <div class="tl-img" style="background:rgba(34,197,94,0.08);">💼</div>
+      <span class="tl-cat">Growth · Jun 2019</span>
+      <div class="tl-title">First Paid Freelance Project</div>
+      <div class="tl-desc">$80. Three weeks. A full visual identity for a Jakarta-based environmental NGO. Learned more than a semester of classes.</div>
+    </div>
+
+    <h2 class="tl-year-heading">2018</h2>
+
+    <div class="tl-item" data-cat="adventure">
+      <div class="tl-img" style="background:rgba(236,72,153,0.08);">✨</div>
+      <span class="tl-cat">Adventure · Sep 2018</span>
+      <div class="tl-title">Discovered UI Design — Changed Everything</div>
+      <div class="tl-desc">Stumbled onto Dribbble while studying communication design. Stayed up until 4am recreating UIs for fun. Still kind of do that.</div>
+    </div>
+
+    <div class="tl-item" data-cat="growth">
+      <div class="tl-img" style="background:rgba(34,197,94,0.08);">🏫</div>
+      <span class="tl-cat">Growth · Aug 2018</span>
+      <div class="tl-title">Started University — Visual Communication Design</div>
+      <div class="tl-desc">First day at Universitas Indonesia. Brought a sketchbook I still have somewhere. The beginning of everything.</div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ══ RESOURCES ══ -->
+<div id="page-resources" class="page">
+  <main>
+    <h1>Resources</h1>
+    <p style="margin-bottom:48px;">Practical design kits built from real freelance experience — for designers, solopreneurs, and creative professionals.</p>
+
+    <section>
+      <span class="section-label">Resume kits</span>
+
+      <div class="res-item">
+        <div class="res-img" style="background:rgba(0,0,0,0.04);">📄</div>
+        <span class="res-cat">Figma Template · Free</span>
+        <div class="res-title">Minimal Designer Resume</div>
+        <div class="res-desc">Clean, single-column resume template for product and UX designers. Light and dark versions included.</div>
+        <div class="res-foot">
+          <span class="res-price">Free</span>
+          <span class="res-dl">⬇ 1.2K downloads</span>
+        </div>
+      </div>
+
+      <div class="res-item">
+        <div class="res-img" style="background:rgba(124,92,252,0.06);">✨</div>
+        <span class="res-cat">Figma · 3 layouts · $9</span>
+        <div class="res-title">Portfolio Resume Pro Kit</div>
+        <div class="res-desc">Three resume layouts — minimal, editorial, and sidebar — all in one Figma file. Includes cover letter template.</div>
+        <div class="res-foot">
+          <span class="res-price">$9</span>
+          <span class="res-dl">⬇ 840 sold</span>
+        </div>
+      </div>
+
+      <div class="res-item">
+        <div class="res-img" style="background:rgba(59,130,246,0.06);">🎨</div>
+        <span class="res-cat">Notion + PDF · $7</span>
+        <div class="res-title">UX Designer CV System</div>
+        <div class="res-desc">A Notion-based CV that exports to PDF. Designed specifically for UX portfolios with case study links and skill sections.</div>
+        <div class="res-foot">
+          <span class="res-price">$7</span>
+          <span class="res-dl">⬇ 620 sold</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <span class="section-label">Emailer kits</span>
+
+      <div class="res-item">
+        <div class="res-img" style="background:rgba(34,197,94,0.06);">📧</div>
+        <span class="res-cat">HTML + Figma · Free</span>
+        <div class="res-title">Freelancer Welcome Email Kit</div>
+        <div class="res-desc">A welcome email sequence template for onboarding new freelance clients. Plain text and HTML versions included.</div>
+        <div class="res-foot">
+          <span class="res-price">Free</span>
+          <span class="res-dl">⬇ 980 downloads</span>
+        </div>
+      </div>
+
+      <div class="res-item">
+        <div class="res-img" style="background:rgba(251,191,36,0.06);">💌</div>
+        <span class="res-cat">8 Templates · $12</span>
+        <div class="res-title">Client Onboarding Email Sequence</div>
+        <div class="res-desc">Eight email templates for every stage of a client project: intro, brief, kickoff, update, feedback, delivery, invoice, follow-up.</div>
+        <div class="res-foot">
+          <span class="res-price">$12</span>
+          <span class="res-dl">⬇ 540 sold</span>
+        </div>
+      </div>
+
+      <div class="res-item">
+        <div class="res-img" style="background:rgba(236,72,153,0.06);">📨</div>
+        <span class="res-cat">Figma · Responsive · $15</span>
+        <div class="res-title">Newsletter Design System</div>
+        <div class="res-desc">A complete newsletter design system in Figma — header, body, footer, and component library. Responsive and dark-mode ready.</div>
+        <div class="res-foot">
+          <span class="res-price">$15</span>
+          <span class="res-dl">⬇ 720 sold</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <span class="section-label">Invoice kits</span>
+
+      <div class="res-item">
+        <div class="res-img" style="background:rgba(251,191,36,0.06);">🧾</div>
+        <span class="res-cat">Notion + PDF · Free</span>
+        <div class="res-title">Minimal Freelance Invoice</div>
+        <div class="res-desc">A dead-simple invoice template in Notion and PDF. No fluff — just the fields you actually need.</div>
+        <div class="res-foot">
+          <span class="res-price">Free</span>
+          <span class="res-dl">⬇ 2.1K downloads</span>
+        </div>
+      </div>
+
+      <div class="res-item">
+        <div class="res-img" style="background:rgba(59,130,246,0.06);">💼</div>
+        <span class="res-cat">Figma · Editable · $8</span>
+        <div class="res-title">Studio Invoice & Quote Pack</div>
+        <div class="res-desc">Invoice + quote template pair in Figma. Consistent branding across both documents with auto-calculated totals.</div>
+        <div class="res-foot">
+          <span class="res-price">$8</span>
+          <span class="res-dl">⬇ 1.4K sold</span>
+        </div>
+      </div>
+
+      <div class="res-item">
+        <div class="res-img" style="background:rgba(124,92,252,0.06);">📊</div>
+        <span class="res-cat">Notion + Google Sheets · $10</span>
+        <div class="res-title">Freelance Finance Tracker</div>
+        <div class="res-desc">Track income, expenses, and taxes across all projects in one place. Includes invoice log and annual summary views.</div>
+        <div class="res-foot">
+          <span class="res-price">$10</span>
+          <span class="res-dl">⬇ 880 sold</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <span class="section-label">Print kits</span>
+
+      <div class="res-item">
+        <div class="res-img" style="background:rgba(0,0,0,0.04);">🖨️</div>
+        <span class="res-cat">Print-ready PDF · Free</span>
+        <div class="res-title">Minimal Business Card Set</div>
+        <div class="res-desc">Two clean business card designs — horizontal and vertical — ready to send to any printer. 300 DPI, CMYK.</div>
+        <div class="res-foot">
+          <span class="res-price">Free</span>
+          <span class="res-dl">⬇ 760 downloads</span>
+        </div>
+      </div>
+
+      <div class="res-item">
+        <div class="res-img" style="background:rgba(251,191,36,0.06);">📋</div>
+        <span class="res-cat">A4 · Print-ready · $11</span>
+        <div class="res-title">Proposal & Case Study Print Kit</div>
+        <div class="res-desc">Print-ready A4 proposal and case study template pair. Designed for leaving behind after a client pitch.</div>
+        <div class="res-foot">
+          <span class="res-price">$11</span>
+          <span class="res-dl">⬇ 490 sold</span>
+        </div>
+      </div>
+
+      <div class="res-item">
+        <div class="res-img" style="background:rgba(34,197,94,0.06);">🗂️</div>
+        <span class="res-cat">Figma + PDF · $13</span>
+        <div class="res-title">Designer Stationery Pack</div>
+        <div class="res-desc">Business card, letterhead, envelope, and invoice — a complete print stationery system for your freelance practice.</div>
+        <div class="res-foot">
+          <span class="res-price">$13</span>
+          <span class="res-dl">⬇ 620 sold</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <span class="section-label">Branding & identity</span>
+
+      <div class="res-item">
+        <div class="res-img" style="background:rgba(124,92,252,0.06);">🎨</div>
+        <span class="res-cat">Figma · Full System · Free</span>
+        <div class="res-title">Personal Brand Identity System</div>
+        <div class="res-desc">Logo, colour palette, typography, and usage guidelines — everything to build a cohesive personal brand as a designer.</div>
+        <div class="res-foot">
+          <span class="res-price">Free</span>
+          <span class="res-dl">⬇ 1.8K downloads</span>
+        </div>
+      </div>
+
+      <div class="res-item">
+        <div class="res-img" style="background:rgba(236,72,153,0.06);">🌈</div>
+        <span class="res-cat">Figma · 5 styles · $14</span>
+        <div class="res-title">Logo & Colour Palette System</div>
+        <div class="res-desc">Five logo styles with matching colour palette systems — each with light and dark variants and a colour rationale guide.</div>
+        <div class="res-foot">
+          <span class="res-price">$14</span>
+          <span class="res-dl">⬇ 1.1K sold</span>
+        </div>
+      </div>
+
+      <div class="res-item">
+        <div class="res-img" style="background:rgba(59,130,246,0.06);">📖</div>
+        <span class="res-cat">Figma · Guide included · $18</span>
+        <div class="res-title">Brand Guidelines Template Kit</div>
+        <div class="res-desc">A complete brand guidelines document template — cover, overview, colour, typography, logo usage, photography, and do/don't sections.</div>
+        <div class="res-foot">
+          <span class="res-price">$18</span>
+          <span class="res-dl">⬇ 890 sold</span>
+        </div>
+      </div>
+
+      <div class="res-item">
+        <div class="res-img" style="background:rgba(251,191,36,0.08);">🏆</div>
+        <span class="res-cat">Bundle · Best value · $29</span>
+        <div class="res-title">The Complete Creative Freelancer Kit</div>
+        <div class="res-desc">Every template above in one bundle — resume, invoices, proposals, emails, print files, and brand identity. Everything you need to run a professional design practice.</div>
+        <div class="res-foot">
+          <span class="res-price">$29 — Save 40%</span>
+          <span class="res-dl">⬇ 500+ sold</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ══ WORK OVERLAY ══ -->
+<div class="overlay" id="work-overlay">
+  <div class="overlay-inner">
+    <button class="overlay-close" onclick="closeWork()">← Back</button>
+    <span class="overlay-emoji" id="ov-emoji">🗳️</span>
+    <span class="overlay-eyebrow" id="ov-eyebrow">Civic Design · 2023</span>
+    <div class="overlay-title" id="ov-title">Project</div>
+    <div class="overlay-tags" id="ov-tags"></div>
+    <div class="overlay-body" id="ov-body"><p></p></div>
+    <div class="overlay-metrics" id="ov-metrics"></div>
+    <div class="overlay-section-h">Process</div>
+    <ul class="overlay-steps" id="ov-steps"></ul>
+  </div>
+</div>
+
+<!-- ══ BOTTOM NAV ══ -->
+<nav class="bottom-nav" id="bottom-nav">
+  <div class="nav-links" id="nav-links">
+    <div class="nav-indicator" id="nav-indicator"></div>
+    <button class="nav-link active" data-page="home" onclick="navigate('home')">Home</button>
+    <button class="nav-link" data-page="work" onclick="navigate('work')">Work</button>
+    <button class="nav-link" data-page="timeline" onclick="navigate('timeline')">Timeline</button>
+    <button class="nav-link" data-page="resources" onclick="navigate('resources')">Resources</button>
+  </div>
+</nav>
+
+<script>
+  // ── Fade in ──
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const f = document.getElementById('fadein');
+      f.classList.add('gone');
+      setTimeout(() => f.remove(), 600);
+    }, 200);
+  });
+
+  // ── Nav indicator (Charlie Deets style) ──
+  function moveIndicator(activeBtn) {
+    const indicator = document.getElementById('nav-indicator');
+    const navLinks = document.getElementById('nav-links');
+    const navRect = navLinks.getBoundingClientRect();
+    const btnRect = activeBtn.getBoundingClientRect();
+    indicator.style.width = btnRect.width + 'px';
+    indicator.style.transform = `translateX(${btnRect.left - navRect.left}px)`;
+  }
+
+  // ── Navigation ──
+  function navigate(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-link').forEach(t => t.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    const activeBtn = document.querySelector(`.nav-link[data-page="${page}"]`);
+    activeBtn.classList.add('active');
+    moveIndicator(activeBtn);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    closeWork();
+  }
+
+  // Init indicator on first load
+  window.addEventListener('DOMContentLoaded', () => {
+    const active = document.querySelector('.nav-link.active');
+    if (active) moveIndicator(active);
+  });
+  window.addEventListener('resize', () => {
+    const active = document.querySelector('.nav-link.active');
+    if (active) moveIndicator(active);
+  });
+
+  // ── Work filter ──
+  function filterWork(cat, btn) {
+    document.querySelectorAll('#page-work .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.work-item').forEach(card => {
+      card.style.display = (cat === 'all' || (card.dataset.cat||'').includes(cat)) ? '' : 'none';
+    });
+  }
+
+  // ── Timeline filter ──
+  function filterTl(cat, btn) {
+    document.querySelectorAll('#page-timeline .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.tl-item').forEach(el => {
+      el.style.display = (cat === 'all' || el.dataset.cat === cat) ? '' : 'none';
+    });
+    document.querySelectorAll('.tl-year-heading').forEach(h => {
+      // hide year heading if no visible items follow it
+      let next = h.nextElementSibling;
+      let hasVisible = false;
+      while (next && !next.classList.contains('tl-year-heading')) {
+        if (next.classList.contains('tl-item') && next.style.display !== 'none') hasVisible = true;
+        next = next.nextElementSibling;
+      }
+      h.style.display = hasVisible ? '' : 'none';
+    });
+  }
+
+  // ── Work overlay data ──
+  const workData = {
+    bijak: {
+      emoji: '🗳️',
+      eyebrow: 'Civic Design · Web Platform · 2023',
+      title: 'Bijak Memilih — Civic Design Platform',
+      tags: ['Civic Tech', 'Social Impact', 'Web Platform', 'UX Research'],
+      body: 'A platform designed to promote political literacy for Indonesian voters ahead of the 2024 election cycle. Combining rigorous user research with human-centred design to help first-time voters navigate complex political information with confidence and clarity.',
+      metrics: [{ val: '45K+', label: 'Users reached' }, { val: '92%', label: 'Task success rate' }, { val: '4.7★', label: 'User rating' }],
+      steps: [
+        'Ran 24 user interviews across 4 Indonesian cities to understand voter anxiety and information-seeking behaviour.',
+        'Mapped 120+ content touchpoints across competitor civic platforms to identify clarity gaps.',
+        'Designed a progressive information architecture that introduces complexity only as the user is ready.',
+        'Iterated through 3 rounds of usability testing with first-time voters aged 17–25.',
+        'Launched with a full accessibility audit — WCAG 2.1 AA compliant across all screens.',
+      ]
+    },
+    lima: {
+      emoji: '🤖',
+      eyebrow: 'AI Research · Speculative Design · 2023',
+      title: 'Project Lima — AI & Design Research',
+      tags: ['AI Research', 'Speculative Design', 'Qualitative Research'],
+      body: 'A six-month explorative research project examining how artificial intelligence reshapes the role of designers. Part provocation, part practical framework — drawing from 12 expert interviews and analysis of 40+ AI design tools.',
+      metrics: [{ val: '3K+', label: 'Report reads' }, { val: '12', label: 'Expert interviews' }, { val: '40+', label: 'AI tools analysed' }],
+      steps: [
+        'Synthesised 6 months of desk research into a framework distinguishing AI-replaceable vs. AI-augmented design tasks.',
+        'Conducted 12 in-depth interviews with senior designers, researchers, and engineers across Southeast Asia.',
+        'Designed the research report as a designed artefact — not just a document, but a visual argument.',
+        'Published findings in a 48-page PDF and a distilled essay reaching 3,000+ designers.',
+        'Presented findings at DesignConf Jakarta 2023 and two university design programmes.',
+      ]
+    },
+    liburan: {
+      emoji: '🌴',
+      eyebrow: 'AR Campaign · Travel · 2021',
+      title: 'Semua Bisa Liburan — AR Travel Campaign',
+      tags: ['AR Campaign', 'Travel', 'Social', 'Inclusive Design'],
+      body: 'An augmented reality campaign making travel dreams accessible for all Indonesians — promoting inclusive tourism through creative, joyful, and deeply shareable design. Shortlisted at Cannes Lions 2021, Design category.',
+      metrics: [{ val: '1.2M', label: 'AR interactions' }, { val: '82K', label: 'Social shares' }, { val: '+34%', label: 'Booking uplift' }],
+      steps: [
+        'Researched barriers to domestic travel across income levels — aspiration was high, confidence was low.',
+        'Designed an AR Instagram filter letting users "visit" 12 Indonesian destinations from their living rooms.',
+        'Created a full campaign visual system: assets, copywriting, and motion design built in-house.',
+        'Partnered with 3 local tourism boards to promote authentic, non-stereotyped destination imagery.',
+        'Post-campaign: bookings for featured destinations up 34% in the following 60 days.',
+      ]
+    },
+    tiket: {
+      emoji: '🎫',
+      eyebrow: 'UX / UI · Mobile App · 2022',
+      title: 'Tiket.com — Hotel Comparison Redesign',
+      tags: ['UX / UI', 'Mobile', 'Product Design', 'Travel'],
+      body: 'Redesigning the hotel search and comparison experience for Indonesia\'s leading travel platform. Focused on reducing decision fatigue and improving booking confidence on mobile — resulting in a 31% reduction in drop-off and an 18% uplift in conversions.',
+      metrics: [{ val: '↓31%', label: 'Drop-off rate' }, { val: '+18%', label: 'Conversions' }, { val: '4.9★', label: 'App rating' }],
+      steps: [
+        'Analysed 400+ session recordings and 1,200 exit-intent survey responses to pinpoint core drop-off moments.',
+        'Ran competitive analysis across 8 global booking platforms to benchmark comparison interaction patterns.',
+        'Designed a new comparison drawer keeping all critical info visible without full-screen context switching.',
+        'Ran 3 rounds of moderated user testing with 8 participants each, iterating key interactions each round.',
+        'Shipped with a full A/B test — 100% rollout after 2 weeks of statistical confidence.',
+      ]
+    },
+    inklusif: {
+      emoji: '♿',
+      eyebrow: 'Design System · Accessibility · 2024',
+      title: 'Inklusif — Accessibility Design System',
+      tags: ['Accessibility', 'Design System', 'Social Impact', 'Open Source'],
+      body: 'Indonesia\'s first open-source accessibility design system — WCAG 2.1 AA compliant components, patterns, and documentation for local product teams who often lack the resources to audit for accessibility themselves.',
+      metrics: [{ val: '240+', label: 'Components' }, { val: '18', label: 'Teams adopted' }, { val: 'Open', label: 'Source' }],
+      steps: [
+        'Surveyed 40 Indonesian product teams — 78% had never conducted an accessibility audit.',
+        'Ran co-design sessions with users with visual and motor impairments, partnering with disability-rights organisations.',
+        'Built 240+ Figma components with annotations, usage guidance, and state documentation.',
+        'Created a public documentation site with React and Vue implementation code.',
+        'Hosted 4 free onboarding workshops for teams adopting the system in the first quarter.',
+      ]
+    },
+    ruang: {
+      emoji: '📚',
+      eyebrow: 'EdTech · Web App · 2022',
+      title: 'Ruang Kreasi — Learning Platform',
+      tags: ['EdTech', 'Research', 'Web App', 'Brand Design'],
+      body: 'Full product design for a creative learning platform for young Indonesian designers — from visual identity through to end-to-end product design, focused on building genuine mastery through joyful, non-intimidating learning flows.',
+      metrics: [{ val: '8K+', label: 'Students enrolled' }, { val: '94%', label: 'Completion rate' }, { val: '4.8★', label: 'CSAT' }],
+      steps: [
+        'Interviewed 30 design students on learning barriers — the biggest: imposter syndrome and overwhelming tooling.',
+        'Designed a "mastery path" UX where complexity is introduced progressively and wins are celebrated explicitly.',
+        'Created the full visual identity: wordmark, illustration system, and component library.',
+        'Built an interactive course player with video, exercises, and community critique on the same surface.',
+        '94% course completion — 3× higher than the industry average for online design courses.',
+      ]
+    },
+  };
+
+  function openWork(id) {
+    const d = workData[id];
+    if (!d) return;
+    document.getElementById('ov-emoji').textContent = d.emoji;
+    document.getElementById('ov-eyebrow').textContent = d.eyebrow;
+    document.getElementById('ov-title').textContent = d.title;
+    document.getElementById('ov-tags').innerHTML = d.tags.map(t => `<span class="overlay-tag">${t}</span>`).join('');
+    document.getElementById('ov-body').innerHTML = `<p>${d.body}</p>`;
+    document.getElementById('ov-metrics').innerHTML = d.metrics.map(m =>
+      `<div><div class="ov-metric-val">${m.val}</div><div class="ov-metric-label">${m.label}</div></div>`
+    ).join('');
+    document.getElementById('ov-steps').innerHTML = d.steps.map((s, i) =>
+      `<li><span class="overlay-step-n">${i + 1}</span>${s}</li>`
+    ).join('');
+    document.getElementById('work-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeWork() {
+    document.getElementById('work-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeWork(); });
+</script>
+</body>
+</html>
