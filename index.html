@@ -567,6 +567,106 @@
     .overlay-steps li:last-child { border-bottom: 1px solid var(--border); }
     .overlay-step-n { color: var(--ink-dark); font-weight: 600; flex-shrink: 0; }
 
+    /* ── Case study extended sections ── */
+    .cs-hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    .cs-section-label {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 28px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .cs-body {
+      font-size: 21px;
+      line-height: 34px;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .cs-role-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin: 16px 0 0;
+    }
+
+    .cs-role-item {
+      padding: 14px 0;
+      border-right: 1px solid var(--border);
+    }
+    .cs-role-item:last-child { border-right: none; padding-left: 20px; }
+    .cs-role-item:first-child { padding-right: 20px; }
+    .cs-role-item:nth-child(2) { padding: 14px 20px; }
+    .cs-role-label { font-size: 14px; color: var(--muted); line-height: 22px; margin-bottom: 3px; }
+    .cs-role-val { font-size: 16px; font-weight: 600; color: var(--ink-dark); line-height: 24px; }
+
+    .cs-methods {
+      list-style: none; padding: 0;
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 12px;
+    }
+    .cs-method {
+      font-size: 14px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 3px 12px;
+      line-height: 24px;
+    }
+
+    .cs-findings { list-style: none; padding: 0; margin-top: 16px; }
+    .cs-finding {
+      padding: 14px 0;
+      border-top: 1px solid var(--border);
+      font-size: 19px;
+      line-height: 30px;
+      color: var(--muted);
+    }
+    .cs-finding:last-child { border-bottom: 1px solid var(--border); }
+    .cs-finding strong { color: var(--ink-dark); font-weight: 600; }
+
+    .cs-decisions { list-style: none; padding: 0; margin-top: 16px; }
+    .cs-decision {
+      padding: 16px 0;
+      border-top: 1px solid var(--border);
+    }
+    .cs-decision:last-child { border-bottom: 1px solid var(--border); }
+    .cs-decision-title {
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--ink-dark);
+      line-height: 28px;
+      margin-bottom: 5px;
+    }
+    .cs-decision-body {
+      font-size: 17px;
+      line-height: 28px;
+      color: var(--muted);
+    }
+
+    .cs-learnings { list-style: none; padding: 0; margin-top: 16px; }
+    .cs-learning {
+      padding: 12px 0;
+      border-top: 1px solid var(--border);
+      font-size: 19px;
+      line-height: 30px;
+      color: var(--muted);
+      display: flex;
+      gap: 14px;
+      align-items: baseline;
+    }
+    .cs-learning:last-child { border-bottom: 1px solid var(--border); }
+    .cs-learning-n { color: var(--ink-dark); font-weight: 600; flex-shrink: 0; font-size: 16px; }
+
+    @media screen and (max-width: 640px) {
+      .cs-role-grid { grid-template-columns: 1fr 1fr; }
+      .cs-role-item:nth-child(3) { border-right: none; padding-left: 0; border-top: 1px solid var(--border); grid-column: span 2; }
+    }
+
     /* ── Bottom Nav (Charlie Deets style floating pill) ── */
     .bottom-nav {
       position: fixed;
@@ -1260,9 +1360,38 @@
     <div class="overlay-title" id="ov-title">Project</div>
     <div class="overlay-tags" id="ov-tags"></div>
     <div class="overlay-body" id="ov-body"><p></p></div>
+
+    <hr class="cs-hr">
+
+    <span class="cs-section-label">The problem</span>
+    <p class="cs-body" id="ov-problem"></p>
+
+    <div class="cs-role-grid" id="ov-role"></div>
+
+    <hr class="cs-hr">
+
+    <span class="cs-section-label">Research</span>
+    <ul class="cs-methods" id="ov-methods"></ul>
+
+    <span class="cs-section-label" style="margin-top:28px;display:block;">Key findings</span>
+    <ul class="cs-findings" id="ov-findings"></ul>
+
+    <hr class="cs-hr">
+
+    <span class="cs-section-label">Design decisions</span>
+    <ul class="cs-decisions" id="ov-decisions"></ul>
+
+    <hr class="cs-hr">
+
     <div class="overlay-metrics" id="ov-metrics"></div>
-    <div class="overlay-section-h">Process</div>
+
+    <div class="overlay-section-h" style="margin-top:32px;">Process</div>
     <ul class="overlay-steps" id="ov-steps"></ul>
+
+    <hr class="cs-hr">
+
+    <span class="cs-section-label">What I learned</span>
+    <ul class="cs-learnings" id="ov-learnings"></ul>
   </div>
 </div>
 
@@ -1354,7 +1483,20 @@
       eyebrow: 'Civic Design · Web Platform · 2023',
       title: 'Bijak Memilih — Civic Design Platform',
       tags: ['Civic Tech', 'Social Impact', 'Web Platform', 'UX Research'],
-      body: 'A platform designed to promote political literacy for Indonesian voters ahead of the 2024 election cycle. Combining rigorous user research with human-centred design to help first-time voters navigate complex political information with confidence and clarity.',
+      body: 'A platform helping first-time Indonesian voters navigate political information with confidence — built ahead of the 2024 election cycle, which would be the largest single-day democratic event in history.',
+      problem: 'Indonesia\'s 2024 elections would see 40 million first-time voters go to the polls. Civic information existed, but it was fragmented, partisan, and written for people already politically engaged — not for the people who would actually decide the outcome.',
+      role: [{ label: 'My role', val: 'Lead UX Designer' }, { label: 'Duration', val: '12 weeks' }, { label: 'Team', val: '1 researcher, 1 content strategist, 2 engineers' }],
+      methods: ['User interviews', 'Competitive audit', 'Content analysis', 'Diary studies', 'Usability testing'],
+      findings: [
+        '<strong>Trust was the deciding factor — not information volume.</strong> Users didn\'t lack access to political data. They couldn\'t tell what was reliable.',
+        '<strong>First-time voters felt personally excluded by the language.</strong> Policy content read like it was written for people who were already converted.',
+        '<strong>Mobile-first was non-negotiable.</strong> 83% of our target users accessed political news exclusively on their phones.',
+      ],
+      decisions: [
+        { title: 'Plain-language summaries first, depth on demand', body: 'Every policy position shows a one-sentence plain-language summary. Users tap to expand if they want the detail. This reduced cognitive load at entry without removing depth.' },
+        { title: 'Source transparency as a design element', body: 'Every fact surfaces its source inline — not buried in a footnote. Trust is built through visibility, not disclaimers.' },
+        { title: 'Candidate comparison over candidate profiles', body: 'Users wanted to make choices, not read bios. The primary view became a side-by-side comparison tool. Profiles are secondary.' },
+      ],
       metrics: [{ val: '45K+', label: 'Users reached' }, { val: '92%', label: 'Task success rate' }, { val: '4.7★', label: 'User rating' }],
       steps: [
         'Ran 24 user interviews across 4 Indonesian cities to understand voter anxiety and information-seeking behaviour.',
@@ -1362,14 +1504,32 @@
         'Designed a progressive information architecture that introduces complexity only as the user is ready.',
         'Iterated through 3 rounds of usability testing with first-time voters aged 17–25.',
         'Launched with a full accessibility audit — WCAG 2.1 AA compliant across all screens.',
-      ]
+      ],
+      learnings: [
+        'Neutral design is a myth. Every choice — what to show first, what to hide, what to call a "policy" — is a political act.',
+        'The most important design decisions were about what not to include.',
+        'Accessibility wasn\'t a feature we added. It was the foundation we built from.',
+      ],
     },
     lima: {
       emoji: '🤖',
       eyebrow: 'AI Research · Speculative Design · 2023',
       title: 'Project Lima — AI & Design Research',
       tags: ['AI Research', 'Speculative Design', 'Qualitative Research'],
-      body: 'A six-month explorative research project examining how artificial intelligence reshapes the role of designers. Part provocation, part practical framework — drawing from 12 expert interviews and analysis of 40+ AI design tools.',
+      body: 'A six-month research project examining how AI reshapes the role of designers. Part provocation, part practical framework — drawing from 12 expert interviews and analysis of 40+ AI design tools.',
+      problem: 'In 2023, every conversation about AI in design was either utopian or panicked. Neither was useful. I wanted to know what was actually true — which parts of the design process were genuinely at risk, and which were becoming more valuable.',
+      role: [{ label: 'My role', val: 'Lead Researcher & Designer' }, { label: 'Duration', val: '6 months' }, { label: 'Team', val: 'Solo, with 12 expert collaborators' }],
+      methods: ['Expert interviews', 'Tool analysis (40+ tools)', 'Literature review', 'Participatory workshops'],
+      findings: [
+        '<strong>AI is best at the things designers like least.</strong> Spec documentation, accessibility scanning, and layout exploration are being automated. Creative direction and judgment are not.',
+        '<strong>Designers who conflate tools with craft feel the most threatened.</strong> Those who define themselves by problem-solving feel the least threatened.',
+        '<strong>The biggest opportunity is AI as a research accelerant.</strong> Synthesis and insight generation — not ideation — is where AI creates real leverage.',
+      ],
+      decisions: [
+        { title: 'A framework, not a prediction', body: 'Rather than forecasting timelines, the report gives designers a tool to evaluate any new AI capability against their own work. Useful in two years, not just now.' },
+        { title: 'The report itself as a designed artefact', body: 'Typography, pacing, visual hierarchy — all deliberate. The report demonstrates what human craft still brings to communication.' },
+        { title: 'Full methodology transparency', body: 'All 12 interviewee names, all tools tested, all criteria visible. Credibility through openness — not through authority.' },
+      ],
       metrics: [{ val: '3K+', label: 'Report reads' }, { val: '12', label: 'Expert interviews' }, { val: '40+', label: 'AI tools analysed' }],
       steps: [
         'Synthesised 6 months of desk research into a framework distinguishing AI-replaceable vs. AI-augmented design tasks.',
@@ -1377,14 +1537,32 @@
         'Designed the research report as a designed artefact — not just a document, but a visual argument.',
         'Published findings in a 48-page PDF and a distilled essay reaching 3,000+ designers.',
         'Presented findings at DesignConf Jakarta 2023 and two university design programmes.',
-      ]
+      ],
+      learnings: [
+        'The research changed my own practice more than I anticipated — I started treating AI as a thought partner, not a production shortcut.',
+        'Writing for a wide, mixed audience is one of the hardest design problems I\'ve faced. Every sentence had to work for a student and a CPO simultaneously.',
+        'A research project with no client is both freeing and terrifying. The only brief is your own curiosity.',
+      ],
     },
     liburan: {
       emoji: '🌴',
       eyebrow: 'AR Campaign · Travel · 2021',
       title: 'Semua Bisa Liburan — AR Travel Campaign',
       tags: ['AR Campaign', 'Travel', 'Social', 'Inclusive Design'],
-      body: 'An augmented reality campaign making travel dreams accessible for all Indonesians — promoting inclusive tourism through creative, joyful, and deeply shareable design. Shortlisted at Cannes Lions 2021, Design category.',
+      body: 'An augmented reality campaign making travel dreams accessible for all Indonesians — joyful, deeply shareable design promoting inclusive domestic tourism. Shortlisted at Cannes Lions 2021, Design category.',
+      problem: 'Domestic tourism in Indonesia collapsed 74% during 2020–2021. When restrictions lifted, the biggest barrier wasn\'t safety — it was confidence. People couldn\'t imagine themselves somewhere new when their world had been so small for so long.',
+      role: [{ label: 'My role', val: 'Lead Campaign Designer' }, { label: 'Duration', val: '8 weeks' }, { label: 'Team', val: 'Copywriter, motion designer, 2 tourism board partners' }],
+      methods: ['Audience surveys (500)', 'Social listening', 'Co-design sessions', 'Competitor analysis'],
+      findings: [
+        '<strong>Travel aspiration was at an all-time high — but confidence was at an all-time low.</strong> People wanted to go, but didn\'t believe they could afford to or navigate it safely.',
+        '<strong>The best-performing content was personal stories, not destination photography.</strong> UGC-style content outperformed professional imagery 4:1 in engagement.',
+        '<strong>AR had an enormous ceiling in Indonesia.</strong> Instagram filter adoption was already high — we just needed to give people a reason to use it.',
+      ],
+      decisions: [
+        { title: 'Accessible destinations first, aspirational ones second', body: 'The 12 destinations were chosen for affordability and accessibility — not Instagram prestige. This was the campaign\'s most consequential decision.' },
+        { title: 'Sharing as the mechanic, not the afterthought', body: 'Every filter experience ended with a native share prompt. The shareable output was designed first; the filter experience was designed around it.' },
+        { title: 'Micro-creators over macro-influencers', body: '120 creators with 10K–100K followers drove 6× the conversion rate of our two macro-influencer activations. Authenticity outperformed reach.' },
+      ],
       metrics: [{ val: '1.2M', label: 'AR interactions' }, { val: '82K', label: 'Social shares' }, { val: '+34%', label: 'Booking uplift' }],
       steps: [
         'Researched barriers to domestic travel across income levels — aspiration was high, confidence was low.',
@@ -1392,14 +1570,32 @@
         'Created a full campaign visual system: assets, copywriting, and motion design built in-house.',
         'Partnered with 3 local tourism boards to promote authentic, non-stereotyped destination imagery.',
         'Post-campaign: bookings for featured destinations up 34% in the following 60 days.',
-      ]
+      ],
+      learnings: [
+        'The most viral moments were unscripted — designed for, but not scripted into. Leave room for people to surprise you.',
+        'Measuring campaign impact is far messier than measuring product impact. You can\'t A/B test a feeling.',
+        'Social responsibility and commercial success are not in tension. They\'re the same thing done well.',
+      ],
     },
     tiket: {
       emoji: '🎫',
       eyebrow: 'UX / UI · Mobile App · 2022',
       title: 'Tiket.com — Hotel Comparison Redesign',
       tags: ['UX / UI', 'Mobile', 'Product Design', 'Travel'],
-      body: 'Redesigning the hotel search and comparison experience for Indonesia\'s leading travel platform. Focused on reducing decision fatigue and improving booking confidence on mobile — resulting in a 31% reduction in drop-off and an 18% uplift in conversions.',
+      body: 'Redesigning the hotel search and comparison experience for Indonesia\'s leading travel platform — reducing decision fatigue on mobile and improving booking confidence, resulting in a 31% drop-off reduction and 18% uplift in conversions.',
+      problem: 'Tiket.com had a 68% mobile cart abandonment rate on hotel bookings — well above the industry average. Users were searching, shortlisting, and then leaving. The product team\'s hypothesis was pricing. The data told a different story.',
+      role: [{ label: 'My role', val: 'Lead UX Designer' }, { label: 'Duration', val: '14 weeks' }, { label: 'Team', val: 'Embedded with 1 PM, 3 engineers, 1 data analyst' }],
+      methods: ['Session recordings (400+)', 'Exit-intent surveys (1,200)', 'Moderated user testing', 'Competitive benchmarking (8 platforms)'],
+      findings: [
+        '<strong>The problem wasn\'t the price — it was the comparison.</strong> Users abandoned when they needed to compare two similar hotels. The UI forced them to bounce between screens to do it.',
+        '<strong>Mobile users needed fewer decisions per screen, not fewer decisions overall.</strong> Reducing options didn\'t help — reorganising when they appeared did.',
+        '<strong>Trust signals were absent at the highest-stakes moment.</strong> At payment, users couldn\'t see cancellation policy or ratings without navigating back.',
+      ],
+      decisions: [
+        { title: 'A persistent comparison drawer', body: 'Users pin up to 3 hotels and compare side-by-side without leaving search results. The drawer persists across scroll. This was the single biggest driver of conversion uplift.' },
+        { title: 'Trust signals at the payment step', body: 'Star rating, review count, cancellation policy, and key amenities visible on the payment screen — no back navigation required.' },
+        { title: 'Search criteria cached and editable in one gesture', body: 'The biggest friction after comparison was re-entering search criteria. We cached it and surfaced it as a collapsed edit strip at the top of results.' },
+      ],
       metrics: [{ val: '↓31%', label: 'Drop-off rate' }, { val: '+18%', label: 'Conversions' }, { val: '4.9★', label: 'App rating' }],
       steps: [
         'Analysed 400+ session recordings and 1,200 exit-intent survey responses to pinpoint core drop-off moments.',
@@ -1407,14 +1603,32 @@
         'Designed a new comparison drawer keeping all critical info visible without full-screen context switching.',
         'Ran 3 rounds of moderated user testing with 8 participants each, iterating key interactions each round.',
         'Shipped with a full A/B test — 100% rollout after 2 weeks of statistical confidence.',
-      ]
+      ],
+      learnings: [
+        'The data told us where users left. The interviews told us why. You need both — neither alone is enough.',
+        'The comparison drawer felt obvious in hindsight. That\'s usually a sign you got it right.',
+        'Shipping an A/B test teaches you things no amount of user testing can. Real behaviour under real stakes is irreplaceable.',
+      ],
     },
     inklusif: {
       emoji: '♿',
       eyebrow: 'Design System · Accessibility · 2024',
       title: 'Inklusif — Accessibility Design System',
       tags: ['Accessibility', 'Design System', 'Social Impact', 'Open Source'],
-      body: 'Indonesia\'s first open-source accessibility design system — WCAG 2.1 AA compliant components, patterns, and documentation for local product teams who often lack the resources to audit for accessibility themselves.',
+      body: 'Indonesia\'s first open-source accessibility design system — WCAG 2.1 AA compliant components, patterns, and documentation built for local product teams who previously had no accessible starting point in their own language.',
+      problem: 'In a 2023 survey of 40 Indonesian product teams, 78% had never conducted an accessibility audit. Not because they didn\'t care — but because the tools, knowledge, and infrastructure didn\'t exist in Bahasa Indonesia, for their context.',
+      role: [{ label: 'My role', val: 'Design System Lead' }, { label: 'Duration', val: '6 months (ongoing)' }, { label: 'Team', val: '4 core contributors, 18 team collaborators' }],
+      methods: ['Team surveys (40 orgs)', 'Co-design with disabled users', 'Audit of 12 global systems', 'Expert review (4 specialists)'],
+      findings: [
+        '<strong>Global accessibility systems don\'t translate.</strong> WCAG documentation is written in English, for Western contexts, with Western examples. Indonesian teams needed localised guidance.',
+        '<strong>The bottleneck was knowledge, not willingness.</strong> Teams wanted to build accessibly but didn\'t know where to start. The system had to teach as it provided.',
+        '<strong>Disabled users were invisible in most research panels.</strong> Not through malice — through ignorance of where to find them and how to include them ethically.',
+      ],
+      decisions: [
+        { title: 'Documentation-first approach', body: 'Every component ships with a "why this matters" section alongside the "how to use it" section. The system teaches accessibility principles through use, not before use.' },
+        { title: 'Bahasa Indonesia first, English second', body: 'All documentation, examples, and guidance available in Bahasa Indonesia first. English is the translation, not the source of truth.' },
+        { title: 'Open source with an explicit contribution model', body: 'We wrote a contribution guide specifically for teams with no open-source experience. The system grows through community pull requests, not just core team additions.' },
+      ],
       metrics: [{ val: '240+', label: 'Components' }, { val: '18', label: 'Teams adopted' }, { val: 'Open', label: 'Source' }],
       steps: [
         'Surveyed 40 Indonesian product teams — 78% had never conducted an accessibility audit.',
@@ -1422,14 +1636,32 @@
         'Built 240+ Figma components with annotations, usage guidance, and state documentation.',
         'Created a public documentation site with React and Vue implementation code.',
         'Hosted 4 free onboarding workshops for teams adopting the system in the first quarter.',
-      ]
+      ],
+      learnings: [
+        'Building for accessibility made every component better — not just more compliant. Constraints produce clarity.',
+        'Open source is a community design problem before it\'s a technical one. The contribution model matters as much as the code.',
+        'The most important thing we shipped was permission: this is not hard, you can do this.',
+      ],
     },
     ruang: {
       emoji: '📚',
       eyebrow: 'EdTech · Web App · 2022',
       title: 'Ruang Kreasi — Learning Platform',
       tags: ['EdTech', 'Research', 'Web App', 'Brand Design'],
-      body: 'Full product design for a creative learning platform for young Indonesian designers — from visual identity through to end-to-end product design, focused on building genuine mastery through joyful, non-intimidating learning flows.',
+      body: 'Full product design for a creative learning platform for young Indonesian designers — from visual identity through to end-to-end UX, focused on building genuine mastery through joyful, non-intimidating learning flows.',
+      problem: 'Indonesia has the world\'s fourth-largest creative workforce — but almost no structured pathways for junior designers to grow into seniors. Most learning happened through English-language YouTube tutorials aimed at Western markets, with no connection to the Indonesian design industry.',
+      role: [{ label: 'My role', val: 'Lead Product Designer' }, { label: 'Duration', val: '20 weeks' }, { label: 'Team', val: '2 engineers, 1 curriculum designer, 1 illustrator' }],
+      methods: ['Student interviews (30)', 'Instructor interviews (8)', 'Platform audits (12)', 'Completion rate analysis'],
+      findings: [
+        '<strong>Imposter syndrome was the primary reason students quit.</strong> The biggest drop-off wasn\'t complexity — it was self-doubt triggered by comparison to polished Western portfolios.',
+        '<strong>Cohort learning dramatically outperformed solo learning.</strong> Students with even one peer were 3× more likely to complete a course.',
+        '<strong>The tone of feedback mattered as much as the content.</strong> The wrong kind of critique made students quit. Feedback had to be designed, not just enabled.',
+      ],
+      decisions: [
+        { title: 'Mastery-gated progression', body: 'Students can\'t move to the next lesson until they\'ve demonstrated understanding — not through tests, but through a short design exercise reviewed by a community mentor.' },
+        { title: 'Indonesian designers as the heroes', body: 'Every example, case study, and reference in the curriculum features Indonesian work. No more aspiring to be a Silicon Valley designer.' },
+        { title: 'Peer critique as a designed ritual, not a comment section', body: 'A structured critique system with a rubric and a code of conduct. The format teaches critique culture while creating psychological safety.' },
+      ],
       metrics: [{ val: '8K+', label: 'Students enrolled' }, { val: '94%', label: 'Completion rate' }, { val: '4.8★', label: 'CSAT' }],
       steps: [
         'Interviewed 30 design students on learning barriers — the biggest: imposter syndrome and overwhelming tooling.',
@@ -1437,7 +1669,12 @@
         'Created the full visual identity: wordmark, illustration system, and component library.',
         'Built an interactive course player with video, exercises, and community critique on the same surface.',
         '94% course completion — 3× higher than the industry average for online design courses.',
-      ]
+      ],
+      learnings: [
+        'Curriculum design was harder than product design — and more important. The product is a delivery mechanism for the learning model.',
+        'A 94% completion rate is a community win, not a product win. It happens because people feel they belong.',
+        'Designing for joy and designing for rigour are the same challenge approached from different angles.',
+      ],
     },
   };
 
@@ -1449,11 +1686,27 @@
     document.getElementById('ov-title').textContent = d.title;
     document.getElementById('ov-tags').innerHTML = d.tags.map(t => `<span class="overlay-tag">${t}</span>`).join('');
     document.getElementById('ov-body').innerHTML = `<p>${d.body}</p>`;
+    document.getElementById('ov-problem').textContent = d.problem;
+    document.getElementById('ov-role').innerHTML = d.role.map(r =>
+      `<div class="cs-role-item"><div class="cs-role-label">${r.label}</div><div class="cs-role-val">${r.val}</div></div>`
+    ).join('');
+    document.getElementById('ov-methods').innerHTML = d.methods.map(m =>
+      `<li class="cs-method">${m}</li>`
+    ).join('');
+    document.getElementById('ov-findings').innerHTML = d.findings.map(f =>
+      `<li class="cs-finding">${f}</li>`
+    ).join('');
+    document.getElementById('ov-decisions').innerHTML = d.decisions.map(dec =>
+      `<li class="cs-decision"><div class="cs-decision-title">${dec.title}</div><div class="cs-decision-body">${dec.body}</div></li>`
+    ).join('');
     document.getElementById('ov-metrics').innerHTML = d.metrics.map(m =>
       `<div><div class="ov-metric-val">${m.val}</div><div class="ov-metric-label">${m.label}</div></div>`
     ).join('');
     document.getElementById('ov-steps').innerHTML = d.steps.map((s, i) =>
       `<li><span class="overlay-step-n">${i + 1}</span>${s}</li>`
+    ).join('');
+    document.getElementById('ov-learnings').innerHTML = d.learnings.map((l, i) =>
+      `<li class="cs-learning"><span class="cs-learning-n">${i + 1}</span>${l}</li>`
     ).join('');
     document.getElementById('work-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
