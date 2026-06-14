@@ -349,72 +349,191 @@
     }
 
     /* ── Resources ── */
-    .res-item {
+    .res-section { margin-bottom: 40px; }
+
+    .res-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       border-top: 1px solid var(--border);
-      padding: 14px 0;
-      overflow: hidden;
-      min-height: 80px;
+      border-left: 1px solid var(--border);
     }
-    .res-item:last-child { border-bottom: 1px solid var(--border); }
 
-    .res-img {
-      width: 120px;
-      aspect-ratio: 16/9;
-      border-radius: 8px;
-      float: right;
-      margin: 0 0 8px 20px;
+    .res-card {
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 22px 16px;
+      cursor: pointer;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
+      flex-direction: column;
+      min-height: 190px;
+      transition: background 0.12s;
+    }
+    .res-card:hover { background: rgba(0,0,0,0.025); }
+    @media (prefers-color-scheme: dark) { .res-card:hover { background: rgba(255,255,255,0.03); } }
+
+    .res-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .res-card-emoji { font-size: 26px; line-height: 1; }
+
+    .res-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .res-badge.free {
+      color: #16a34a;
+      border-color: rgba(22,163,74,0.3);
+      background: rgba(22,163,74,0.07);
     }
 
-    .res-cat {
-      font-size: 14px;
+    .res-card-cat {
+      font-size: 12px;
       color: var(--muted);
-      line-height: 24px;
-      margin-bottom: 2px;
+      line-height: 18px;
+      margin-bottom: 4px;
       display: block;
     }
-
-    .res-title {
-      font-size: 19px;
-      line-height: 30px;
+    .res-card-title {
+      font-size: 16px;
       font-weight: 600;
       color: var(--ink-dark);
-      margin-bottom: 4px;
-      cursor: pointer;
+      line-height: 22px;
+      margin-bottom: 6px;
     }
-
-    .res-title:hover {
-      text-decoration: underline;
-      text-underline-offset: 4px;
-      text-decoration-thickness: 3px;
-      text-decoration-color: var(--link-dec);
-    }
-
-    .res-desc {
-      font-size: 16px;
-      line-height: 26px;
+    .res-card-desc {
+      font-size: 13px;
+      line-height: 21px;
       color: var(--muted);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
     }
-
-    .res-foot {
-      margin-top: 8px;
+    .res-card-foot {
+      margin-top: 14px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      justify-content: space-between;
     }
-
-    .res-price {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--ink-dark);
-    }
-
-    .res-dl {
-      font-size: 14px;
+    .res-card-dl { font-size: 12px; color: var(--muted); }
+    .res-card-arrow {
+      font-size: 15px;
       color: var(--muted);
+      transition: transform 0.14s;
+    }
+    .res-card:hover .res-card-arrow { transform: translateX(4px); }
+
+    /* ── Resource overlay ── */
+    .res-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 200;
+      overflow-y: auto;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(16px);
+      transition: opacity 0.22s, transform 0.22s;
+    }
+    .res-overlay.open { opacity: 1; pointer-events: all; transform: none; }
+
+    .res-overlay-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 64px 32px 120px;
+    }
+
+    .rov-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .rov-emoji { font-size: 52px; line-height: 1; }
+    .rov-price {
+      font-size: 15px;
+      font-weight: 700;
+      padding: 5px 16px;
+      border-radius: 100px;
+      border: 1.5px solid var(--border);
+      color: var(--ink-dark);
+      margin-top: 6px;
+      white-space: nowrap;
+    }
+    .rov-price.free {
+      color: #16a34a;
+      border-color: rgba(22,163,74,0.3);
+      background: rgba(22,163,74,0.07);
+    }
+    .rov-cat {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 28px;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .rov-title {
+      font-size: 34px;
+      font-weight: 400;
+      color: var(--ink-dark);
+      line-height: 42px;
+      margin-bottom: 20px;
+    }
+    .rov-desc {
+      font-size: 21px;
+      line-height: 34px;
+      color: var(--muted);
+    }
+    .rov-includes { list-style: none; padding: 0; margin-top: 14px; }
+    .rov-includes li {
+      font-size: 17px;
+      line-height: 28px;
+      color: var(--muted);
+      padding: 11px 0 11px 22px;
+      border-top: 1px solid var(--border);
+      position: relative;
+    }
+    .rov-includes li:last-child { border-bottom: 1px solid var(--border); }
+    .rov-includes li::before { content: '→'; position: absolute; left: 0; color: var(--ink-dark); font-size: 13px; top: 13px; }
+    .rov-for {
+      font-size: 17px;
+      line-height: 28px;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .rov-social { font-size: 14px; color: var(--muted); margin-top: 6px; }
+    .rov-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 32px;
+      background: var(--ink-dark);
+      color: var(--bg);
+      font-size: 16px;
+      font-weight: 600;
+      padding: 13px 28px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .rov-cta:hover { opacity: 0.8; }
+
+    @media screen and (max-width: 600px) {
+      .res-grid { grid-template-columns: 1fr; }
+      .rov-title { font-size: 26px; line-height: 34px; }
     }
 
     /* ── Section label ── */
@@ -1150,314 +1269,236 @@
 <div id="page-resources" class="page">
   <main>
     <h1>Resources</h1>
-    <p style="margin-bottom:48px;">Practical design kits built from real freelance experience — for designers, solopreneurs, and creative professionals.</p>
+    <p style="margin-bottom:36px;">Practical design kits, guides, and systems built from real freelance experience. Over 7,000 people use something I made.</p>
 
-    <section>
+    <div class="filters" style="margin-bottom:40px;">
+      <button class="filter-btn active" onclick="filterRes('all',this)">All</button>
+      <button class="filter-btn" onclick="filterRes('free',this)">Free</button>
+      <button class="filter-btn" onclick="filterRes('paid',this)">Paid</button>
+    </div>
+
+    <div class="res-section" id="rs-resume">
       <span class="section-label">Resume kits</span>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(0,0,0,0.04);">📄</div>
-        <span class="res-cat">Figma Template · Free</span>
-        <div class="res-title">Minimal Designer Resume</div>
-        <div class="res-desc">Clean, single-column resume template for product and UX designers. Light and dark versions included.</div>
-        <div class="res-foot">
-          <span class="res-price">Free</span>
-          <span class="res-dl">⬇ 1.2K downloads</span>
+      <div class="res-grid">
+        <div class="res-card" data-price="free" onclick="openRes('resume-minimal')">
+          <div class="res-card-top"><span class="res-card-emoji">📄</span><span class="res-badge free">Free</span></div>
+          <span class="res-card-cat">Figma Template</span>
+          <div class="res-card-title">Minimal Designer Resume</div>
+          <div class="res-card-desc">Clean, single-column resume for product and UX designers. Light and dark versions, A4 and Letter sizes.</div>
+          <div class="res-card-foot"><span class="res-card-dl">1.2K downloads</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="paid" onclick="openRes('resume-pro')">
+          <div class="res-card-top"><span class="res-card-emoji">✨</span><span class="res-badge">$9</span></div>
+          <span class="res-card-cat">Figma · 3 layouts</span>
+          <div class="res-card-title">Portfolio Resume Pro Kit</div>
+          <div class="res-card-desc">Three layouts — minimal, editorial, sidebar — in one Figma file. Includes cover letter template.</div>
+          <div class="res-card-foot"><span class="res-card-dl">840 sold</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="paid" onclick="openRes('resume-cv')">
+          <div class="res-card-top"><span class="res-card-emoji">🎨</span><span class="res-badge">$7</span></div>
+          <span class="res-card-cat">Notion + PDF</span>
+          <div class="res-card-title">UX Designer CV System</div>
+          <div class="res-card-desc">A Notion CV that exports to PDF. Built for UX portfolios with case study links and skill sections.</div>
+          <div class="res-card-foot"><span class="res-card-dl">620 sold</span><span class="res-card-arrow">→</span></div>
         </div>
       </div>
+    </div>
 
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(124,92,252,0.06);">✨</div>
-        <span class="res-cat">Figma · 3 layouts · $9</span>
-        <div class="res-title">Portfolio Resume Pro Kit</div>
-        <div class="res-desc">Three resume layouts — minimal, editorial, and sidebar — all in one Figma file. Includes cover letter template.</div>
-        <div class="res-foot">
-          <span class="res-price">$9</span>
-          <span class="res-dl">⬇ 840 sold</span>
-        </div>
-      </div>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(59,130,246,0.06);">🎨</div>
-        <span class="res-cat">Notion + PDF · $7</span>
-        <div class="res-title">UX Designer CV System</div>
-        <div class="res-desc">A Notion-based CV that exports to PDF. Designed specifically for UX portfolios with case study links and skill sections.</div>
-        <div class="res-foot">
-          <span class="res-price">$7</span>
-          <span class="res-dl">⬇ 620 sold</span>
-        </div>
-      </div>
-    </section>
-
-    <section>
+    <div class="res-section" id="rs-emailer">
       <span class="section-label">Emailer kits</span>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(34,197,94,0.06);">📧</div>
-        <span class="res-cat">HTML + Figma · Free</span>
-        <div class="res-title">Freelancer Welcome Email Kit</div>
-        <div class="res-desc">A welcome email sequence template for onboarding new freelance clients. Plain text and HTML versions included.</div>
-        <div class="res-foot">
-          <span class="res-price">Free</span>
-          <span class="res-dl">⬇ 980 downloads</span>
+      <div class="res-grid">
+        <div class="res-card" data-price="free" onclick="openRes('email-welcome')">
+          <div class="res-card-top"><span class="res-card-emoji">📧</span><span class="res-badge free">Free</span></div>
+          <span class="res-card-cat">HTML + Figma</span>
+          <div class="res-card-title">Freelancer Welcome Email Kit</div>
+          <div class="res-card-desc">A welcome sequence for onboarding new clients. Plain text and HTML versions.</div>
+          <div class="res-card-foot"><span class="res-card-dl">980 downloads</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="paid" onclick="openRes('email-onboard')">
+          <div class="res-card-top"><span class="res-card-emoji">💌</span><span class="res-badge">$12</span></div>
+          <span class="res-card-cat">8 templates</span>
+          <div class="res-card-title">Client Onboarding Email Sequence</div>
+          <div class="res-card-desc">Eight templates covering every stage — intro, brief, kickoff, updates, delivery, invoice, follow-up.</div>
+          <div class="res-card-foot"><span class="res-card-dl">540 sold</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="paid" onclick="openRes('email-newsletter')">
+          <div class="res-card-top"><span class="res-card-emoji">📨</span><span class="res-badge">$15</span></div>
+          <span class="res-card-cat">Figma · Responsive</span>
+          <div class="res-card-title">Newsletter Design System</div>
+          <div class="res-card-desc">Complete newsletter system in Figma — header, body, footer, component library. Dark-mode ready.</div>
+          <div class="res-card-foot"><span class="res-card-dl">720 sold</span><span class="res-card-arrow">→</span></div>
         </div>
       </div>
+    </div>
 
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(251,191,36,0.06);">💌</div>
-        <span class="res-cat">8 Templates · $12</span>
-        <div class="res-title">Client Onboarding Email Sequence</div>
-        <div class="res-desc">Eight email templates for every stage of a client project: intro, brief, kickoff, update, feedback, delivery, invoice, follow-up.</div>
-        <div class="res-foot">
-          <span class="res-price">$12</span>
-          <span class="res-dl">⬇ 540 sold</span>
-        </div>
-      </div>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(236,72,153,0.06);">📨</div>
-        <span class="res-cat">Figma · Responsive · $15</span>
-        <div class="res-title">Newsletter Design System</div>
-        <div class="res-desc">A complete newsletter design system in Figma — header, body, footer, and component library. Responsive and dark-mode ready.</div>
-        <div class="res-foot">
-          <span class="res-price">$15</span>
-          <span class="res-dl">⬇ 720 sold</span>
-        </div>
-      </div>
-    </section>
-
-    <section>
+    <div class="res-section" id="rs-invoice">
       <span class="section-label">Invoice kits</span>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(251,191,36,0.06);">🧾</div>
-        <span class="res-cat">Notion + PDF · Free</span>
-        <div class="res-title">Minimal Freelance Invoice</div>
-        <div class="res-desc">A dead-simple invoice template in Notion and PDF. No fluff — just the fields you actually need.</div>
-        <div class="res-foot">
-          <span class="res-price">Free</span>
-          <span class="res-dl">⬇ 2.1K downloads</span>
+      <div class="res-grid">
+        <div class="res-card" data-price="free" onclick="openRes('invoice-minimal')">
+          <div class="res-card-top"><span class="res-card-emoji">🧾</span><span class="res-badge free">Free</span></div>
+          <span class="res-card-cat">Notion + PDF</span>
+          <div class="res-card-title">Minimal Freelance Invoice</div>
+          <div class="res-card-desc">Dead-simple invoice in Notion and PDF. Just the fields you actually need.</div>
+          <div class="res-card-foot"><span class="res-card-dl">2.1K downloads</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="paid" onclick="openRes('invoice-studio')">
+          <div class="res-card-top"><span class="res-card-emoji">💼</span><span class="res-badge">$8</span></div>
+          <span class="res-card-cat">Figma · Editable</span>
+          <div class="res-card-title">Studio Invoice & Quote Pack</div>
+          <div class="res-card-desc">Invoice and quote pair in Figma. Consistent branding across both, with auto-calculated totals.</div>
+          <div class="res-card-foot"><span class="res-card-dl">1.4K sold</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="paid" onclick="openRes('invoice-finance')">
+          <div class="res-card-top"><span class="res-card-emoji">📊</span><span class="res-badge">$10</span></div>
+          <span class="res-card-cat">Notion + Google Sheets</span>
+          <div class="res-card-title">Freelance Finance Tracker</div>
+          <div class="res-card-desc">Track income, expenses, and taxes across all projects. Invoice log and annual summary views.</div>
+          <div class="res-card-foot"><span class="res-card-dl">880 sold</span><span class="res-card-arrow">→</span></div>
         </div>
       </div>
+    </div>
 
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(59,130,246,0.06);">💼</div>
-        <span class="res-cat">Figma · Editable · $8</span>
-        <div class="res-title">Studio Invoice & Quote Pack</div>
-        <div class="res-desc">Invoice + quote template pair in Figma. Consistent branding across both documents with auto-calculated totals.</div>
-        <div class="res-foot">
-          <span class="res-price">$8</span>
-          <span class="res-dl">⬇ 1.4K sold</span>
-        </div>
-      </div>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(124,92,252,0.06);">📊</div>
-        <span class="res-cat">Notion + Google Sheets · $10</span>
-        <div class="res-title">Freelance Finance Tracker</div>
-        <div class="res-desc">Track income, expenses, and taxes across all projects in one place. Includes invoice log and annual summary views.</div>
-        <div class="res-foot">
-          <span class="res-price">$10</span>
-          <span class="res-dl">⬇ 880 sold</span>
-        </div>
-      </div>
-    </section>
-
-    <section>
+    <div class="res-section" id="rs-print">
       <span class="section-label">Print kits</span>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(0,0,0,0.04);">🖨️</div>
-        <span class="res-cat">Print-ready PDF · Free</span>
-        <div class="res-title">Minimal Business Card Set</div>
-        <div class="res-desc">Two clean business card designs — horizontal and vertical — ready to send to any printer. 300 DPI, CMYK.</div>
-        <div class="res-foot">
-          <span class="res-price">Free</span>
-          <span class="res-dl">⬇ 760 downloads</span>
+      <div class="res-grid">
+        <div class="res-card" data-price="free" onclick="openRes('print-card')">
+          <div class="res-card-top"><span class="res-card-emoji">🖨️</span><span class="res-badge free">Free</span></div>
+          <span class="res-card-cat">Print-ready PDF</span>
+          <div class="res-card-title">Minimal Business Card Set</div>
+          <div class="res-card-desc">Two card designs — horizontal and vertical — 300 DPI, CMYK, ready to send to any printer.</div>
+          <div class="res-card-foot"><span class="res-card-dl">760 downloads</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="paid" onclick="openRes('print-proposal')">
+          <div class="res-card-top"><span class="res-card-emoji">📋</span><span class="res-badge">$11</span></div>
+          <span class="res-card-cat">A4 · Print-ready</span>
+          <div class="res-card-title">Proposal & Case Study Print Kit</div>
+          <div class="res-card-desc">A4 proposal and case study pair. Designed for leaving behind after a client pitch.</div>
+          <div class="res-card-foot"><span class="res-card-dl">490 sold</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="paid" onclick="openRes('print-stationery')">
+          <div class="res-card-top"><span class="res-card-emoji">🗂️</span><span class="res-badge">$13</span></div>
+          <span class="res-card-cat">Figma + PDF</span>
+          <div class="res-card-title">Designer Stationery Pack</div>
+          <div class="res-card-desc">Card, letterhead, envelope, and invoice — a complete stationery system for your freelance practice.</div>
+          <div class="res-card-foot"><span class="res-card-dl">620 sold</span><span class="res-card-arrow">→</span></div>
         </div>
       </div>
+    </div>
 
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(251,191,36,0.06);">📋</div>
-        <span class="res-cat">A4 · Print-ready · $11</span>
-        <div class="res-title">Proposal & Case Study Print Kit</div>
-        <div class="res-desc">Print-ready A4 proposal and case study template pair. Designed for leaving behind after a client pitch.</div>
-        <div class="res-foot">
-          <span class="res-price">$11</span>
-          <span class="res-dl">⬇ 490 sold</span>
-        </div>
-      </div>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(34,197,94,0.06);">🗂️</div>
-        <span class="res-cat">Figma + PDF · $13</span>
-        <div class="res-title">Designer Stationery Pack</div>
-        <div class="res-desc">Business card, letterhead, envelope, and invoice — a complete print stationery system for your freelance practice.</div>
-        <div class="res-foot">
-          <span class="res-price">$13</span>
-          <span class="res-dl">⬇ 620 sold</span>
-        </div>
-      </div>
-    </section>
-
-    <section>
+    <div class="res-section" id="rs-brand">
       <span class="section-label">Branding & identity</span>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(124,92,252,0.06);">🎨</div>
-        <span class="res-cat">Figma · Full System · Free</span>
-        <div class="res-title">Personal Brand Identity System</div>
-        <div class="res-desc">Logo, colour palette, typography, and usage guidelines — everything to build a cohesive personal brand as a designer.</div>
-        <div class="res-foot">
-          <span class="res-price">Free</span>
-          <span class="res-dl">⬇ 1.8K downloads</span>
+      <div class="res-grid">
+        <div class="res-card" data-price="free" onclick="openRes('brand-identity')">
+          <div class="res-card-top"><span class="res-card-emoji">🎨</span><span class="res-badge free">Free</span></div>
+          <span class="res-card-cat">Figma · Full system</span>
+          <div class="res-card-title">Personal Brand Identity System</div>
+          <div class="res-card-desc">Logo, colour palette, typography, and usage guidelines — everything for a cohesive personal brand.</div>
+          <div class="res-card-foot"><span class="res-card-dl">1.8K downloads</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="paid" onclick="openRes('brand-logo')">
+          <div class="res-card-top"><span class="res-card-emoji">🌈</span><span class="res-badge">$14</span></div>
+          <span class="res-card-cat">Figma · 5 styles</span>
+          <div class="res-card-title">Logo & Colour Palette System</div>
+          <div class="res-card-desc">Five logo styles with matching palette systems — light and dark variants with colour rationale.</div>
+          <div class="res-card-foot"><span class="res-card-dl">1.1K sold</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="paid" onclick="openRes('brand-guidelines')">
+          <div class="res-card-top"><span class="res-card-emoji">📖</span><span class="res-badge">$18</span></div>
+          <span class="res-card-cat">Figma · Guide included</span>
+          <div class="res-card-title">Brand Guidelines Template Kit</div>
+          <div class="res-card-desc">Complete brand guidelines template — colour, typography, logo usage, photography, do/don'ts.</div>
+          <div class="res-card-foot"><span class="res-card-dl">890 sold</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="paid" onclick="openRes('brand-bundle')" style="border-top:2px solid var(--ink-dark);">
+          <div class="res-card-top"><span class="res-card-emoji">🏆</span><span class="res-badge">$29</span></div>
+          <span class="res-card-cat">Bundle · Save 40%</span>
+          <div class="res-card-title">The Complete Creative Freelancer Kit</div>
+          <div class="res-card-desc">Every template in one bundle — resume, invoices, proposals, emails, print, and brand identity.</div>
+          <div class="res-card-foot"><span class="res-card-dl">500+ sold</span><span class="res-card-arrow">→</span></div>
         </div>
       </div>
+    </div>
 
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(236,72,153,0.06);">🌈</div>
-        <span class="res-cat">Figma · 5 styles · $14</span>
-        <div class="res-title">Logo & Colour Palette System</div>
-        <div class="res-desc">Five logo styles with matching colour palette systems — each with light and dark variants and a colour rationale guide.</div>
-        <div class="res-foot">
-          <span class="res-price">$14</span>
-          <span class="res-dl">⬇ 1.1K sold</span>
-        </div>
-      </div>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(59,130,246,0.06);">📖</div>
-        <span class="res-cat">Figma · Guide included · $18</span>
-        <div class="res-title">Brand Guidelines Template Kit</div>
-        <div class="res-desc">A complete brand guidelines document template — cover, overview, colour, typography, logo usage, photography, and do/don't sections.</div>
-        <div class="res-foot">
-          <span class="res-price">$18</span>
-          <span class="res-dl">⬇ 890 sold</span>
-        </div>
-      </div>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(251,191,36,0.08);">🏆</div>
-        <span class="res-cat">Bundle · Best value · $29</span>
-        <div class="res-title">The Complete Creative Freelancer Kit</div>
-        <div class="res-desc">Every template above in one bundle — resume, invoices, proposals, emails, print files, and brand identity. Everything you need to run a professional design practice.</div>
-        <div class="res-foot">
-          <span class="res-price">$29 — Save 40%</span>
-          <span class="res-dl">⬇ 500+ sold</span>
-        </div>
-      </div>
-    </section>
-
-    <section>
+    <div class="res-section" id="rs-learn">
       <span class="section-label">Learning guides</span>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(124,92,252,0.06);">🗺️</div>
-        <span class="res-cat">PDF + Notion · Free</span>
-        <div class="res-title">UI/UX Design Learning Roadmap</div>
-        <div class="res-desc">A clear, opinionated path from beginner to hireable — covering the skills, tools, and projects that actually matter. No fluff, no overwhelm. 16K+ designers are using this.</div>
-        <div class="res-foot">
-          <span class="res-price">Free</span>
-          <span class="res-dl">⬇ 16K+ using this</span>
+      <div class="res-grid">
+        <div class="res-card" data-price="free" onclick="openRes('learn-roadmap')">
+          <div class="res-card-top"><span class="res-card-emoji">🗺️</span><span class="res-badge free">Free</span></div>
+          <span class="res-card-cat">PDF + Notion</span>
+          <div class="res-card-title">UI/UX Design Learning Roadmap</div>
+          <div class="res-card-desc">An opinionated path from beginner to hireable. The skills and projects that actually matter. 16K+ using this.</div>
+          <div class="res-card-foot"><span class="res-card-dl">16K+ using this</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="paid" onclick="openRes('learn-firstmonth')">
+          <div class="res-card-top"><span class="res-card-emoji">🧭</span><span class="res-badge">$7</span></div>
+          <span class="res-card-cat">PDF Guide</span>
+          <div class="res-card-title">Survival Guide: First Month at Work</div>
+          <div class="res-card-desc">What no one tells you before your first design job — feedback, crits, managing up, building credibility.</div>
+          <div class="res-card-foot"><span class="res-card-dl">900+ downloads</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="paid" onclick="openRes('learn-slides')">
+          <div class="res-card-top"><span class="res-card-emoji">🎬</span><span class="res-badge">$9</span></div>
+          <span class="res-card-cat">Figma Template</span>
+          <div class="res-card-title">Animated Slides with Figma</div>
+          <div class="res-card-desc">Presentation template with smooth animation patterns for pitches and case study talks. No After Effects needed.</div>
+          <div class="res-card-foot"><span class="res-card-dl">2K+ downloads</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="paid" onclick="openRes('learn-figmafile')">
+          <div class="res-card-top"><span class="res-card-emoji">📐</span><span class="res-badge">$6</span></div>
+          <span class="res-card-cat">Figma · New</span>
+          <div class="res-card-title">Figma File Template + Moodboard</div>
+          <div class="res-card-desc">Ready-to-use project file with page structure, naming conventions, component scaffolding, and moodboard.</div>
+          <div class="res-card-foot"><span class="res-card-dl">New</span><span class="res-card-arrow">→</span></div>
         </div>
       </div>
+    </div>
 
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(34,197,94,0.06);">🧭</div>
-        <span class="res-cat">PDF Guide · $7</span>
-        <div class="res-title">Survival Guide: Your First Month at Work</div>
-        <div class="res-desc">Everything no one tells you before your first design job — how to navigate feedback, run your first crit, manage up, and build credibility fast without burning out.</div>
-        <div class="res-foot">
-          <span class="res-price">$7</span>
-          <span class="res-dl">⬇ 900+ downloads</span>
-        </div>
-      </div>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(59,130,246,0.06);">🎬</div>
-        <span class="res-cat">Figma Template · $9</span>
-        <div class="res-title">Animated Slides with Figma</div>
-        <div class="res-desc">A presentation template built in Figma with smooth, repeatable animation patterns — for case study presentations, client pitches, and conference talks. No After Effects needed.</div>
-        <div class="res-foot">
-          <span class="res-price">$9</span>
-          <span class="res-dl">⬇ 2K+ downloads</span>
-        </div>
-      </div>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(236,72,153,0.06);">📐</div>
-        <span class="res-cat">Figma · New!</span>
-        <div class="res-title">Figma File Template + Moodboard</div>
-        <div class="res-desc">A ready-to-use Figma project file with page structure, naming conventions, component scaffolding, and a moodboard layout — so you start every project already organised.</div>
-        <div class="res-foot">
-          <span class="res-price">$6</span>
-          <span class="res-dl">⬇ New</span>
-        </div>
-      </div>
-    </section>
-
-    <section>
+    <div class="res-section" id="rs-solo">
       <span class="section-label">Solopreneur systems</span>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(251,191,36,0.06);">🗂️</div>
-        <span class="res-cat">Notion · Free</span>
-        <div class="res-title">Personal Dashboard — Creative Edition</div>
-        <div class="res-desc">A Notion dashboard built around the reality of creative freelance work — project pipeline, weekly focus, content ideas, and a reading list. No complicated system, just what works. 3K+ using this.</div>
-        <div class="res-foot">
-          <span class="res-price">Free</span>
-          <span class="res-dl">⬇ 3K+ using this</span>
+      <div class="res-grid">
+        <div class="res-card" data-price="free" onclick="openRes('solo-dashboard')">
+          <div class="res-card-top"><span class="res-card-emoji">🗂️</span><span class="res-badge free">Free</span></div>
+          <span class="res-card-cat">Notion</span>
+          <div class="res-card-title">Personal Dashboard — Creative Edition</div>
+          <div class="res-card-desc">Project pipeline, weekly focus, content ideas, reading list. What actually works for creative freelancers. 3K+ using this.</div>
+          <div class="res-card-foot"><span class="res-card-dl">3K+ using this</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="paid" onclick="openRes('solo-safetynet')">
+          <div class="res-card-top"><span class="res-card-emoji">💰</span><span class="res-badge">$9</span></div>
+          <span class="res-card-cat">Notion + Sheets</span>
+          <div class="res-card-title">Safety Net Planner for Freelancers</div>
+          <div class="res-card-desc">Calculate your runway before going solo — income targets, tax, living costs, savings buffer.</div>
+          <div class="res-card-foot"><span class="res-card-dl">900+ using this</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="free" onclick="openRes('solo-os')">
+          <div class="res-card-top"><span class="res-card-emoji">⚙️</span><span class="res-badge free">Free</span></div>
+          <span class="res-card-cat">Notion · Lifetime updates</span>
+          <div class="res-card-title">Creative Freelancer Operating System</div>
+          <div class="res-card-desc">The full Notion system I use — client CRM, proposal tracking, content planning, finance. Forever updated.</div>
+          <div class="res-card-foot"><span class="res-card-dl">Lifetime updates</span><span class="res-card-arrow">→</span></div>
         </div>
       </div>
+    </div>
 
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(34,197,94,0.06);">💰</div>
-        <span class="res-cat">Notion + Sheets · $9</span>
-        <div class="res-title">Safety Net Planner for Freelancers</div>
-        <div class="res-desc">Calculate exactly how much runway you need before going solo — factoring in income targets, tax, living costs, and a savings buffer. The spreadsheet I wish I had before I quit.</div>
-        <div class="res-foot">
-          <span class="res-price">$9</span>
-          <span class="res-dl">⬇ 900+ using this</span>
-        </div>
-      </div>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(124,92,252,0.06);">⚙️</div>
-        <span class="res-cat">Notion · Free · Lifetime updates</span>
-        <div class="res-title">Creative Freelancer Operating System</div>
-        <div class="res-desc">The full Notion system I use to run my freelance practice — client management, proposal tracking, content planning, and finances — all in one workspace. Free, forever updated.</div>
-        <div class="res-foot">
-          <span class="res-price">Free</span>
-          <span class="res-dl">⬇ Lifetime updates</span>
-        </div>
-      </div>
-    </section>
-
-    <section>
+    <div class="res-section" id="rs-web">
       <span class="section-label">Web design</span>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(59,130,246,0.06);">🌐</div>
-        <span class="res-cat">PDF Roadmap · Free</span>
-        <div class="res-title">Webflow Learning Roadmap</div>
-        <div class="res-desc">A step-by-step guide from zero to confident Webflow developer — covering layout, interactions, CMS, and how to structure projects for clients. Sequenced for designers, not developers.</div>
-        <div class="res-foot">
-          <span class="res-price">Free</span>
-          <span class="res-dl">⬇ Free download</span>
+      <div class="res-grid">
+        <div class="res-card" data-price="free" onclick="openRes('web-roadmap')">
+          <div class="res-card-top"><span class="res-card-emoji">🌐</span><span class="res-badge free">Free</span></div>
+          <span class="res-card-cat">PDF Roadmap</span>
+          <div class="res-card-title">Webflow Learning Roadmap</div>
+          <div class="res-card-desc">Zero to confident Webflow developer — layout, interactions, CMS, client structure. Sequenced for designers.</div>
+          <div class="res-card-foot"><span class="res-card-dl">Free download</span><span class="res-card-arrow">→</span></div>
+        </div>
+        <div class="res-card" data-price="paid" onclick="openRes('web-checklist')">
+          <div class="res-card-top"><span class="res-card-emoji">✅</span><span class="res-badge">$5</span></div>
+          <span class="res-card-cat">Notion Checklist</span>
+          <div class="res-card-title">Webflow Pre-Launch Checklist</div>
+          <div class="res-card-desc">50+ checks across performance, SEO, accessibility, and client handoff. Ship with confidence.</div>
+          <div class="res-card-foot"><span class="res-card-dl">800+ downloads</span><span class="res-card-arrow">→</span></div>
         </div>
       </div>
-
-      <div class="res-item">
-        <div class="res-img" style="background:rgba(34,197,94,0.06);">✅</div>
-        <span class="res-cat">Notion Checklist · $5</span>
-        <div class="res-title">Webflow Pre-Launch Checklist</div>
-        <div class="res-desc">50+ checks across performance, SEO, accessibility, responsiveness, and client handoff — so nothing slips through before you hit publish. Used by 800+ designers on client projects.</div>
-        <div class="res-foot">
-          <span class="res-price">$5</span>
-          <span class="res-dl">⬇ 800+ downloads</span>
-        </div>
-      </div>
-    </section>
+    </div>
 
   </main>
 </div>
@@ -1503,6 +1544,28 @@
 
     <span class="cs-section-label">What I learned</span>
     <ul class="cs-learnings" id="ov-learnings"></ul>
+  </div>
+</div>
+
+<!-- ══ RESOURCE OVERLAY ══ -->
+<div class="res-overlay" id="res-overlay">
+  <div class="res-overlay-inner">
+    <button class="overlay-close" onclick="closeRes()">← Back</button>
+    <div class="rov-header">
+      <span class="rov-emoji" id="rov-emoji">📄</span>
+      <span class="rov-price" id="rov-price">Free</span>
+    </div>
+    <span class="rov-cat" id="rov-cat"></span>
+    <div class="rov-title" id="rov-title"></div>
+    <p class="rov-desc" id="rov-desc"></p>
+    <hr class="cs-hr">
+    <span class="cs-section-label">What's included</span>
+    <ul class="rov-includes" id="rov-includes"></ul>
+    <hr class="cs-hr">
+    <span class="cs-section-label">Who it's for</span>
+    <p class="rov-for" id="rov-for"></p>
+    <p class="rov-social" id="rov-social"></p>
+    <a href="#" class="rov-cta" id="rov-cta">Get this →</a>
   </div>
 </div>
 
@@ -1828,7 +1891,75 @@
     document.body.style.overflow = '';
   }
 
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeWork(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeWork(); closeRes(); }
+  });
+
+  // ── Resource filter ──
+  function filterRes(type, btn) {
+    document.querySelectorAll('#page-resources .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.res-card').forEach(card => {
+      card.style.display = (type === 'all' || card.dataset.price === type) ? '' : 'none';
+    });
+    document.querySelectorAll('.res-section').forEach(sec => {
+      const hasVisible = [...sec.querySelectorAll('.res-card')].some(c => c.style.display !== 'none');
+      sec.style.display = hasVisible ? '' : 'none';
+    });
+  }
+
+  // ── Resource overlay data ──
+  const resourceData = {
+    'resume-minimal': { emoji:'📄', cat:'Resume kit · Figma', price:'Free', isFree:true, dl:'1.2K downloads', title:'Minimal Designer Resume', desc:'Clean, single-column resume for product and UX designers. Light and dark versions, A4 and US Letter. No fluff — just the structure that gets you interviews.', includes:['Light and dark mode versions','A4 and US Letter sizes','Fully editable Figma file','Icon set for skills and tools','Font pairing recommendations'], forWho:'Junior to mid-level designers putting together their first professional resume.' },
+    'resume-pro': { emoji:'✨', cat:'Resume kit · Figma · 3 layouts', price:'$9', isFree:false, dl:'840 sold', title:'Portfolio Resume Pro Kit', desc:'Three resume layouts — minimal, editorial, and sidebar — all in one Figma file. Includes a matching cover letter template.', includes:['3 layout styles: minimal, editorial, sidebar','Matching cover letter template','Light + dark mode per layout','A4 and US Letter','Style guide with font and colour choices'], forWho:'Mid to senior designers who want to present themselves with more visual personality.' },
+    'resume-cv': { emoji:'🎨', cat:'Resume kit · Notion + PDF', price:'$7', isFree:false, dl:'620 sold', title:'UX Designer CV System', desc:'A Notion-based CV that exports cleanly to PDF. Built for UX portfolios — with case study links, skill sections, and a timeline.', includes:['Notion template with full edit access','Clean PDF export layout','Case study link section','Skills and tools rating system','Cover letter in Notion'], forWho:'UX designers who want a living CV they can update without opening a design tool.' },
+    'email-welcome': { emoji:'📧', cat:'Emailer kit · HTML + Figma', price:'Free', isFree:true, dl:'980 downloads', title:'Freelancer Welcome Email Kit', desc:'A welcome email sequence for onboarding new freelance clients. Plain text and HTML versions — professional without being stiff.', includes:['Welcome email (plain text)','HTML version for email clients','Kickoff checklist email','Project expectations email','Copy prompts for personalisation'], forWho:'Freelancers who want to make a strong first impression with every new client.' },
+    'email-onboard': { emoji:'💌', cat:'Emailer kit · 8 templates', price:'$12', isFree:false, dl:'540 sold', title:'Client Onboarding Email Sequence', desc:'Eight email templates for every stage of a client project — from intro to follow-up. Consistent, professional, and actually human.', includes:['8 templates (intro → follow-up)','Subject line variants per email','Plain text + styled HTML','Notes on when to send each','Editable in Notion or Google Docs'], forWho:'Freelancers who want professional client communication without writing from scratch every time.' },
+    'email-newsletter': { emoji:'📨', cat:'Emailer kit · Figma', price:'$15', isFree:false, dl:'720 sold', title:'Newsletter Design System', desc:'A complete newsletter system in Figma — header, body, footer, and component library. Responsive and dark-mode ready.', includes:['Header, body, footer components','Component library with variants','Responsive layout grid','Dark mode versions','Export guide for Mailchimp and Substack'], forWho:'Designers building a newsletter or creating email templates for clients.' },
+    'invoice-minimal': { emoji:'🧾', cat:'Invoice kit · Notion + PDF', price:'Free', isFree:true, dl:'2.1K downloads', title:'Minimal Freelance Invoice', desc:'A dead-simple invoice in Notion and PDF. Just the fields you need. Clients pay faster when they can read it in 10 seconds.', includes:['Notion template (fillable)','PDF version for sending','Line item table with auto-totals','Tax row (optional)','Payment terms section'], forWho:'Any freelancer who wants a clean, professional invoice they can send in under 5 minutes.' },
+    'invoice-studio': { emoji:'💼', cat:'Invoice kit · Figma', price:'$8', isFree:false, dl:'1.4K sold', title:'Studio Invoice & Quote Pack', desc:'Invoice and quote template pair in Figma. Consistent visual branding across both documents with your brand colours.', includes:['Invoice template','Project quote template','Matching visual style across both','Auto-calculating line item table','Editable in Figma, exportable to PDF'], forWho:'Freelancers who want their documents to look as considered as the work inside them.' },
+    'invoice-finance': { emoji:'📊', cat:'Invoice kit · Notion + Google Sheets', price:'$10', isFree:false, dl:'880 sold', title:'Freelance Finance Tracker', desc:'Track income, expenses, and taxes across all projects in one place. Invoice log, annual summary, and monthly earnings view.', includes:['Notion + Google Sheets version','Income and expense tracker','Invoice log (sent/paid/overdue)','Monthly and annual summary views','Tax estimation row'], forWho:'Freelancers who want financial clarity without hiring an accountant.' },
+    'print-card': { emoji:'🖨️', cat:'Print kit · PDF', price:'Free', isFree:true, dl:'760 downloads', title:'Minimal Business Card Set', desc:'Two clean business card designs — horizontal and vertical — print-ready for any printer. 300 DPI, CMYK, 3.5×2in standard.', includes:['Horizontal layout','Vertical layout','300 DPI, CMYK colour mode','Standard 3.5×2in size','Editable in Figma or Illustrator'], forWho:'Designers who want a card that looks as clean as their work.' },
+    'print-proposal': { emoji:'📋', cat:'Print kit · A4 PDF', price:'$11', isFree:false, dl:'490 sold', title:'Proposal & Case Study Print Kit', desc:'Print-ready A4 proposal and case study template pair. For leaving behind after a client pitch — documents that make an impression.', includes:['Project proposal template (A4)','Case study leave-behind (A4)','Matching visual style across both','Cover, overview, timeline, pricing sections','Editable in Figma'], forWho:'Freelancers who pitch in person and want printed materials that reinforce their portfolio.' },
+    'print-stationery': { emoji:'🗂️', cat:'Print kit · Figma + PDF', price:'$13', isFree:false, dl:'620 sold', title:'Designer Stationery Pack', desc:'Business card, letterhead, envelope, and invoice — a complete print stationery system for a coherent freelance practice.', includes:['Business card (horizontal + vertical)','Letterhead (A4)','Envelope (C5)','Invoice template','Brand colour + type guide'], forWho:'Designers and small studios who want every physical touchpoint to feel deliberate.' },
+    'brand-identity': { emoji:'🎨', cat:'Branding · Figma', price:'Free', isFree:true, dl:'1.8K downloads', title:'Personal Brand Identity System', desc:'Logo, colour palette, typography, and usage guidelines — everything to build a cohesive personal brand as a designer.', includes:['Wordmark + logomark variants','Primary and secondary colour palette','Typography pairing guide','Usage dos and don\'ts','Social media asset sizes'], forWho:'Designers building their personal brand for the first time and not sure where to start.' },
+    'brand-logo': { emoji:'🌈', cat:'Branding · Figma · 5 styles', price:'$14', isFree:false, dl:'1.1K sold', title:'Logo & Colour Palette System', desc:'Five logo styles with matching colour palette systems — each with light and dark variants and a colour rationale guide for clients.', includes:['5 complete logo styles','Full colour palette per style (light + dark)','Colour rationale document','Vector export-ready files','Naming and file organisation guide'], forWho:'Designers who need a fast, polished starting point for client brand work.' },
+    'brand-guidelines': { emoji:'📖', cat:'Branding · Figma', price:'$18', isFree:false, dl:'890 sold', title:'Brand Guidelines Template Kit', desc:'A complete brand guidelines document — cover, overview, colour, typography, logo usage, photography, do/don\'ts. The deliverable clients expect.', includes:['12 fully designed pages','Cover, brand overview, colour, typography sections','Logo usage rules (correct/incorrect)','Photography and illustration guidance','Do/don\'t examples'], forWho:'Brand designers who need a polished deliverable they can customise per client in hours, not days.' },
+    'brand-bundle': { emoji:'🏆', cat:'Bundle · Best value', price:'$29 — Save 40%', isFree:false, dl:'500+ sold', title:'The Complete Creative Freelancer Kit', desc:'Every template in one bundle — resume, invoices, proposals, emails, print files, and brand identity. Everything to run a professional design practice.', includes:['All resume templates','All email templates','All invoice and finance templates','All print and stationery templates','All branding templates','40% off individual prices'], forWho:'Designers setting up their freelance practice who want everything sorted in one go.' },
+    'learn-roadmap': { emoji:'🗺️', cat:'Learning guide · PDF + Notion', price:'Free', isFree:true, dl:'16K+ using this', title:'UI/UX Design Learning Roadmap', desc:'A clear, opinionated path from beginner to hireable — the skills, tools, and projects that actually matter. No fluff, no overwhelm.', includes:['Month-by-month skill progression','Recommended tools per stage','Portfolio project ideas per stage','Resource list (free + paid)','Notion version with checkboxes'], forWho:'Complete beginners and career switchers who want a structured path into UX — not a list of YouTube videos.' },
+    'learn-firstmonth': { emoji:'🧭', cat:'Learning guide · PDF', price:'$7', isFree:false, dl:'900+ downloads', title:'Survival Guide: Your First Month at Work', desc:'Everything no one tells you before your first design job — navigating feedback, running your first crit, managing up, building credibility fast.', includes:['Week 1–4 action plan','How to receive and give feedback','Running your first design crit','Managing up: working with your manager','Common first-month mistakes and how to avoid them'], forWho:'Junior designers starting their first full-time role who want to make a strong, lasting impression.' },
+    'learn-slides': { emoji:'🎬', cat:'Learning guide · Figma template', price:'$9', isFree:false, dl:'2K+ downloads', title:'Animated Slides with Figma', desc:'A presentation template in Figma with smooth, repeatable animation patterns — for case study presentations, pitches, and talks. No After Effects needed.', includes:['20 slide templates with animation','Prototype flow pre-built in Figma','Title, content, image, and quote slides','Dark and light versions','Export guide for presentations'], forWho:'Designers who present work regularly and want slides that feel as designed as the work inside them.' },
+    'learn-figmafile': { emoji:'📐', cat:'Learning guide · Figma', price:'$6', isFree:false, dl:'New', title:'Figma File Template + Moodboard', desc:'A ready-to-use Figma project file with page structure, naming conventions, component scaffolding, and a moodboard layout.', includes:['Pre-built page structure (Cover, Research, Wireframes, Design, Handoff)','Naming convention guide','Component scaffolding page','Moodboard layout with grid','Handoff checklist'], forWho:'Designers who want to start every project organised — not spend the first hour setting up frames.' },
+    'solo-dashboard': { emoji:'🗂️', cat:'Solopreneur system · Notion', price:'Free', isFree:true, dl:'3K+ using this', title:'Personal Dashboard — Creative Edition', desc:'A Notion dashboard built around creative freelance work — project pipeline, weekly focus, content ideas, and reading list. What actually works.', includes:['Project pipeline tracker','Weekly focus view','Content idea bank','Reading and learning list','Quick-links hub'], forWho:'Freelancers who want one place to see everything without building a complex productivity system.' },
+    'solo-safetynet': { emoji:'💰', cat:'Solopreneur system · Notion + Sheets', price:'$9', isFree:false, dl:'900+ using this', title:'Safety Net Planner for Freelancers', desc:'Calculate exactly how much runway you need before going solo — income targets, tax, living costs, savings buffer. The spreadsheet I wish I had before I quit.', includes:['Monthly income target calculator','Living costs breakdown','Tax estimation (Indonesia + international)','Savings runway calculator','Go-solo readiness checklist'], forWho:'Designers thinking about going freelance who want to make the leap with real numbers, not a guess.' },
+    'solo-os': { emoji:'⚙️', cat:'Solopreneur system · Notion', price:'Free', isFree:true, dl:'Lifetime updates', title:'Creative Freelancer Operating System', desc:'The full Notion system I use to run my practice — client CRM, proposal tracking, content planning, and finances — all in one workspace.', includes:['Client CRM with project stages','Proposal and contract tracker','Content calendar','Finance and invoice log','Free, forever updated'], forWho:'Freelancers who want a full operating system for their practice — not a collection of disconnected tools.' },
+    'web-roadmap': { emoji:'🌐', cat:'Web design · PDF roadmap', price:'Free', isFree:true, dl:'Free download', title:'Webflow Learning Roadmap', desc:'From zero to confident Webflow developer — layout, interactions, CMS, and client project structure. Sequenced for designers, not developers.', includes:['Week-by-week learning sequence','Core Webflow concepts explained','CMS and dynamic content guide','Interactions and animations chapter','Client handoff checklist'], forWho:'Designers who want to build sites in Webflow but don\'t know where to start or in what order.' },
+    'web-checklist': { emoji:'✅', cat:'Web design · Notion checklist', price:'$5', isFree:false, dl:'800+ downloads', title:'Webflow Pre-Launch Checklist', desc:'50+ checks across performance, SEO, accessibility, responsiveness, and client handoff — so nothing slips through before you hit publish.', includes:['50+ pre-launch checks','Performance and speed section','SEO basics checklist','Accessibility audit prompts','Client handoff checklist'], forWho:'Designers who build sites in Webflow and want to ship with confidence — not discover issues after launch.' },
+  };
+
+  function openRes(id) {
+    const d = resourceData[id];
+    if (!d) return;
+    document.getElementById('rov-emoji').textContent = d.emoji;
+    const priceEl = document.getElementById('rov-price');
+    priceEl.textContent = d.price;
+    priceEl.className = 'rov-price' + (d.isFree ? ' free' : '');
+    document.getElementById('rov-cat').textContent = d.cat;
+    document.getElementById('rov-title').textContent = d.title;
+    document.getElementById('rov-desc').textContent = d.desc;
+    document.getElementById('rov-includes').innerHTML = d.includes.map(i => `<li>${i}</li>`).join('');
+    document.getElementById('rov-for').textContent = d.forWho;
+    document.getElementById('rov-social').textContent = d.dl;
+    const ctaEl = document.getElementById('rov-cta');
+    ctaEl.textContent = d.isFree ? 'Get for free →' : `Get for ${d.price} →`;
+    document.getElementById('res-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeRes() {
+    document.getElementById('res-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
 </script>
 </body>
 </html>
